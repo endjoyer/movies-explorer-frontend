@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
 
-          <Route path="/movies" element={<Movies />} />
+          {/* <Route path="/movies" element={<Movies />} />
 
           <Route path="/saved-movies" element={<SavedMovies />} />
 
@@ -29,7 +29,7 @@ function App() {
 
           <Route path="/signin" element={<Login />} />
 
-          <Route path="/signup" element={<Register />} />
+          <Route path="/signup" element={<Register />} /> */}
         </Routes>
       </div>
     </CurrentUserContext.Provider>
