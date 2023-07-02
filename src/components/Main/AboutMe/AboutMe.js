@@ -1,4 +1,4 @@
-function AboutMe() {
+function AboutMe({ aboutMeRef }) {
   const calculateAge = () => {
     const diffInMilliseconds = new Date() - new Date("2000-08-23");
     const ageDate = new Date(diffInMilliseconds);
@@ -6,7 +6,7 @@ function AboutMe() {
   };
 
   return (
-    <section className="about-me">
+    <section ref={aboutMeRef} className="about-me">
       <h2 className="about-me__title">Студент</h2>
       <div className="about-me__content">
         <div className="about-me__text">

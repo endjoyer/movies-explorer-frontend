@@ -1,20 +1,17 @@
-import { useRef } from "react";
+import React from "react";
 import NavTab from "../NavTab/NavTab";
-function Promo() {
-  const targetRef = useRef(null);
 
-  const scrollToTarget = () => {
-    if (targetRef.current) {
-      targetRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
+function Promo({ scrollToAboutProject, scrollToTechs, scrollToAboutMe }) {
   return (
     <section className="promo">
       <h1 className="promo__title">
         Учебный проект студента факультета Веб-разработки.
       </h1>
-      <NavTab />
+      <NavTab
+        scrollToAboutProject={scrollToAboutProject}
+        scrollToTechs={scrollToTechs}
+        scrollToAboutMe={scrollToAboutMe}
+      />
     </section>
   );
 }

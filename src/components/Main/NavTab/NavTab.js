@@ -1,23 +1,22 @@
-import { useRef } from "react";
-function NavTab() {
-  const targetRef = useRef(null);
+import React from "react";
 
-  const scrollToTarget = () => {
-    if (targetRef.current) {
-      targetRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
+function NavTab({ scrollToAboutProject, scrollToTechs, scrollToAboutMe }) {
   return (
     <ul className="navtab">
       <li className="navtab__list-item">
-        <button className="navtab__button">О проекте</button>
+        <button className="navtab__button" onClick={scrollToAboutProject}>
+          О проекте
+        </button>
       </li>
       <li className="navtab__list-item">
-        <button className="navtab__button">Технологии</button>
+        <button className="navtab__button" onClick={scrollToTechs}>
+          Технологии
+        </button>
       </li>
       <li className="navtab__list-item">
-        <button className="navtab__button">Студент</button>
+        <button className="navtab__button" onClick={scrollToAboutMe}>
+          Студент
+        </button>
       </li>
     </ul>
   );

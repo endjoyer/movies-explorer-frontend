@@ -1,20 +1,31 @@
 .techs {
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
   min-height: 100vh;
-  padding: 100px 70px 0;
+  padding: 100px 0 0;
   background: #272727;
   margin: 0;
+  width: 98.5vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.techs__contend {
+  box-sizing: border-box;
+  margin: 0 70px;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 150px);
 }
 
 .techs__title {
   font-size: 22px;
   line-height: 26px;
   font-weight: 400;
-  margin: 0;
+  margin: 0 auto;
+  padding: 0 70px;
+  max-width: 1140px;
 }
+
 .techs__title::after {
   content: "";
   display: block;
@@ -41,11 +52,13 @@
 }
 
 .techs__list {
-  padding: 0;
-  margin: auto 0;
+  padding: 40px 0;
+  margin: auto;
   display: flex;
   justify-content: center;
   gap: 10px;
+  flex-wrap: wrap; /* Добавляем перенос элементов на новую строку */
+  max-width: 100%; /* Добавляем максимальную ширину */
 }
 
 .techs__list-item {
