@@ -6,6 +6,7 @@
   border-radius: 10px;
   background: #272727;
   margin: 20px 40px 0;
+  padding: 0 0 30px;
 }
 
 .promo__title {
@@ -15,4 +16,30 @@
   font-weight: 400;
   line-height: 58px;
   margin: auto 0;
+}
+
+@media (max-width: 850px) {
+  .promo {
+    margin: 20px 20px 0;
+  }
+
+  .promo__title {
+    font-size: 40px;
+    line-height: 52px;
+    margin: auto 24px;
+  }
+}
+
+@media (max-width: 621px) {
+  .promo {
+    margin: 14px 14px 0;
+    padding: 0 0 17px;
+  }
+
+  .promo__title {
+    max-width: 580px;
+    font-size: 29px;
+    line-height: 37px;
+    margin: auto 0;
+  }
 }

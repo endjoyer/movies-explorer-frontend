@@ -1,10 +1,13 @@
 .techs {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   box-sizing: border-box;
   min-height: 100vh;
-  padding: 100px 0 0;
+  padding: 50px 0;
   background: #272727;
   margin: 0;
-  width: 98.5vw;
+  width: 98.9vw;
   position: relative;
   left: 50%;
   transform: translateX(-50%);
@@ -12,29 +15,14 @@
 .techs__contend {
   box-sizing: border-box;
   margin: 0 70px;
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100vh - 150px);
 }
 
-.techs__title {
-  font-size: 22px;
-  line-height: 26px;
-  font-weight: 400;
-  margin: 0 auto;
-  padding: 0 70px;
+.techs__title-container {
+  margin: 0 70px;
   max-width: 1140px;
 }
 
-.techs__title::after {
-  content: "";
-  display: block;
-  padding: 23px 0 0;
-  border-bottom: 1px solid #dadada;
-}
-
 .techs__subtitle {
-  max-width: 730px;
   text-align: center;
   font-size: 50px;
   font-weight: 400;
@@ -52,13 +40,13 @@
 }
 
 .techs__list {
-  padding: 40px 0;
-  margin: auto;
+  margin: 100px 0 0;
+  padding: 0;
   display: flex;
   justify-content: center;
   gap: 10px;
-  flex-wrap: wrap; /* Добавляем перенос элементов на новую строку */
-  max-width: 100%; /* Добавляем максимальную ширину */
+  flex-wrap: wrap;
+  max-width: 100%;
 }
 
 .techs__list-item {
@@ -66,10 +54,73 @@
   text-align: center;
   width: 90px;
   margin: 0;
-  padding: 21px 0 22px;
+  padding: 21px 0 21px;
   border-radius: 10px;
   background: #303030;
   font-size: 14px;
   font-weight: 400;
   line-height: 17px;
+}
+
+@media (max-width: 850px) {
+  .techs__contend {
+    margin: 0 60px;
+  }
+
+  .techs__title-container {
+    margin: 0 60px;
+  }
+
+  .techs__subtitle {
+    margin: 80px auto 22px;
+  }
+
+  .techs__text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .techs__list {
+    margin: 83px 0 0;
+  }
+
+  .techs__list-item {
+    width: 84px;
+    font-size: 12px;
+    line-height: normal;
+  }
+}
+
+@media (max-width: 621px) {
+  .techs {
+    background: #202020;
+  }
+  .techs__contend {
+    margin: 0 14px;
+  }
+
+  .techs__title-container {
+    margin: 0 14px;
+  }
+
+  .techs__subtitle {
+    font-size: 30px;
+    line-height: normal;
+    margin: 60px auto 24px;
+  }
+
+  .techs__text {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .techs__list {
+    margin: 50px 0 0;
+  }
+
+  .techs__list-item {
+    width: 84px;
+    font-size: 12px;
+    line-height: normal;
+  }
 }

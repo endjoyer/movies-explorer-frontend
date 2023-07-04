@@ -23,13 +23,6 @@
   opacity: 0.7;
 }
 
-@media (max-width: 621px) {
-  .header__link {
-    font-size: 14px;
-    margin: 0 27px 0 auto;
-  }
-}
-
 .header__logo {
   display: block;
   background: url("../../images/logo.svg") 0 0 no-repeat;
@@ -54,4 +47,17 @@
 
 .header__link_signin:hover {
   opacity: 0.8;
+}
+
+@media (max-width: 621px) {
+  .header {
+    margin: 0 14px;
+  }
+  .header__link {
+    font-size: 10px;
+  }
+
+  .header__link_signin {
+    padding: 5px 12px;
+  }
 }

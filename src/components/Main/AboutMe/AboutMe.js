@@ -1,3 +1,5 @@
+import SectionTitle from "../SectionTitle/SectionTitle";
+
 function AboutMe({ aboutMeRef }) {
   const calculateAge = () => {
     const diffInMilliseconds = new Date() - new Date("2000-08-23");
@@ -7,7 +9,7 @@ function AboutMe({ aboutMeRef }) {
 
   return (
     <section ref={aboutMeRef} className="about-me">
-      <h2 className="about-me__title">Студент</h2>
+      <SectionTitle title="Студент" />
       <div className="about-me__content">
         <div className="about-me__text">
           <h3 className="about-me__name">Алексей</h3>

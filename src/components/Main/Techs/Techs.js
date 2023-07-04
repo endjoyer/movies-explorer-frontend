@@ -1,7 +1,11 @@
+import SectionTitle from "../SectionTitle/SectionTitle";
+
 function Techs({ techsRef }) {
   return (
     <section className="techs" ref={techsRef}>
-      <h2 className="techs__title">Технологии</h2>
+      <div className="techs__title-container">
+        <SectionTitle title="Технологии" />
+      </div>
       <div className="techs__contend">
         <h3 className="techs__subtitle">7 технологий</h3>
         <p className="techs__text">

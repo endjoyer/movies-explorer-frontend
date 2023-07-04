@@ -1,7 +1,7 @@
 .portfolio {
   margin: 0 70px;
-  padding: 20px 0 0;
-  min-height: calc(100vh - 192px);
+  padding: 0 0 90px;
+  min-height: calc(100vh - 220px);
 }
 
 .portfolio__title {
@@ -47,6 +47,33 @@
   opacity: 0.7;
 }
 
-.portfolio__name {
+.portfolio__project-name {
   margin: 0;
+}
+
+@media (max-width: 850px) {
+  .portfolio {
+    margin: 0 50px;
+  }
+
+  .portfolio__link {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 621px) {
+  .portfolio {
+    margin: 0 14px;
+  }
+
+  .portfolio__title {
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0 0 40px;
+  }
+
+  .portfolio__link {
+    font-size: 18px;
+    line-height: 28px;
+  }
 }
