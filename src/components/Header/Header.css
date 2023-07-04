@@ -2,8 +2,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
   margin: 0 80px;
   padding: 18px 0;
+}
+
+.header__links {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
 }
 
 .header__link {
@@ -21,6 +31,21 @@
 
 .header__link:hover {
   opacity: 0.7;
+}
+
+.header__link_profile {
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 30px;
+}
+
+.header__profile-icon {
+  background: url("../../images/profile.svg") center no-repeat;
+  width: 26px;
+  min-height: 30px;
+  margin: 0 0 0 17px;
+  border-radius: 4px;
+  background-color: #313131;
 }
 
 .header__logo {
@@ -47,6 +72,12 @@
 
 .header__link_signin:hover {
   opacity: 0.8;
+}
+
+@media (max-width: 800px) {
+  .header__links {
+    display: none;
+  }
 }
 
 @media (max-width: 621px) {
