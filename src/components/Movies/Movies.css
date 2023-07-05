@@ -2,3 +2,15 @@
   margin: 0 70px;
   min-height: calc(100vh - 74px - 112px);
 }
+
+@media (max-width: 800px) {
+  .movies__content {
+    margin: 0 30px;
+  }
+}
+
+@media (max-width: 621px) {
+  .movies__content {
+    margin: 0 14px;
+  }
+}
