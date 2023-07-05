@@ -2,10 +2,10 @@ import React from "react";
 
 function Сheckbox() {
   return (
-    <label class="checkbox">
+    <label className="checkbox">
       <input type="checkbox" />
-      <div class="checkbox__checkmark"></div>
-      <div class="checkbox__body">Короткометражки</div>
+      <div className="checkbox__checkmark"></div>
+      <div className="checkbox__body">Короткометражки</div>
     </label>
   );
 }

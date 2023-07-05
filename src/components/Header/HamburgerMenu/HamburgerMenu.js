@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 
-function HamburgerMenu() {
+function HamburgerMenu({
+  isMainPage,
+  isMoviesPage,
+  isSavedMoviesPage,
+  isProfilePage,
+}) {
   return (
     <div className="hamburger-menu">
       <input id="hamburger-menu__toggle" type="checkbox" />
@@ -11,23 +16,43 @@ function HamburgerMenu() {
       <ul className="hamburger-menu__box">
         <div className="hamburger-menu__cover" />
         <li>
-          <Link to="/" className="hamburger-menu__item">
+          <Link
+            to="/"
+            className={`hamburger-menu__item ${
+              isMainPage && "hamburger-menu__item_active"
+            }`}
+          >
             Главная
           </Link>
         </li>
         <li>
-          <Link to="/movies" className="hamburger-menu__item">
+          <Link
+            to="/movies"
+            className={`hamburger-menu__item ${
+              isMoviesPage && "hamburger-menu__item_active"
+            }`}
+          >
             Фильмы
           </Link>
         </li>
         <li>
-          <Link to="/saved-movies" className="hamburger-menu__item">
+          <Link
+            to="/saved-movies"
+            className={`hamburger-menu__item ${
+              isSavedMoviesPage && "hamburger-menu__item_active"
+            }`}
+          >
             Сохраненные фильмы
           </Link>
         </li>
         <li>
-          <Link to="/profile" className="hamburger-menu__item">
-            Аккаунт <div className=""></div>
+          <Link
+            to="/profile"
+            className={`hamburger-menu__item hamburger-menu__item_profile ${
+              isProfilePage && "hamburger-menu__item_active"
+            }`}
+          >
+            Аккаунт <div className="hamburger-menu__profile-icon"></div>
           </Link>
         </li>
       </ul>

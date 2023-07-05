@@ -4,10 +4,10 @@ import HamburgerMenu from "./HamburgerMenu/HamburgerMenu";
 
 function Header() {
   const { pathname } = useLocation();
-  const isSignUpPage = pathname === "/signup";
   const isMainPage = pathname === "/";
   const isMoviesPage = pathname === "/movies";
-
+  const isSavedMoviesPage = pathname === "/saved-movies";
+  const isProfilePage = pathname === "/profile";
   return (
     <header className="header">
       <Link to="/">
@@ -44,7 +44,12 @@ function Header() {
               </Link>
             </li>
           </ul>
-          <HamburgerMenu />
+          <HamburgerMenu
+            isMainPage={isMainPage}
+            isMoviesPage={isMoviesPage}
+            isSavedMoviesPage={isSavedMoviesPage}
+            isProfilePage={isProfilePage}
+          />
         </>
       )}
     </header>

@@ -3,9 +3,9 @@ import Checkbox from "./Сheckbox/Сheckbox";
 function SearchForm() {
   return (
     <section className="search">
-      <label class="search__label">
-        <input type="text" placeholder="Фильм" class="search__input" />
-        <button type="submit" class="search__button">
+      <label className="search__label">
+        <input type="text" placeholder="Фильм" className="search__input" />
+        <button type="submit" className="search__button">
           Найти
         </button>
       </label>
