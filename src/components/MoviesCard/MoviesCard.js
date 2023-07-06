@@ -11,14 +11,20 @@ function MoviesCard({ card, onCardSave, onCardClick, onCardDelete }) {
   function handleSaveClick() {
     onCardSave(card);
   }
+  function handleCardClick() {
+    onCardClick(card);
+  }
+  function handleDeleteClick() {
+    onCardDelete(card);
+  }
 
   return (
-    <div className="movies-card">
+    <li className="movies-card">
       <div className="movies-card__text">
         <h2 className="movies-card__name">Здесь будет название</h2>
         <p className="movies-card__time">n минут</p>
       </div>
-      <div className="movies-card__image-container">
+      <div className="movies-card__image-container " onClick={handleCardClick}>
         <img className="movies-card__image" alt="Заглушка" src={img} />
       </div>
       <div className="movies-card__button-container">
@@ -30,10 +36,18 @@ function MoviesCard({ card, onCardSave, onCardClick, onCardDelete }) {
           aria-label="Сохранить"
           type="button"
         >
-          {isSaved ? <div className="movies-card__save-icon" /> : "Сохранить"}
+          {isSaved ? "" : "Сохранить"}
         </button>
+        {false && (
+          <button
+            className={`movies-card__button movies-card__button_delete`}
+            onClick={handleDeleteClick}
+            aria-label="Удалить"
+            type="button"
+          />
+        )}
       </div>
-    </div>
+    </li>
   );
 }
 

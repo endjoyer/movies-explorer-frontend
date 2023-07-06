@@ -42,7 +42,8 @@
   border-bottom: 1px solid #ee3465;
 }
 
-.login__input-error {
+.profile__input-error {
+  text-align: center;
   display: block;
   min-height: 24px;
   margin: 6px 0 0;
