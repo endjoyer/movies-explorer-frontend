@@ -124,3 +124,8 @@
     display: block;
   }
 }
+@media (max-width: 621px) {
+  .hamburger-menu__box {
+    width: 100vw;
+  }
+}

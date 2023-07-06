@@ -27,9 +27,6 @@ function MoviesCardList() {
         <MoviesCard />
         <MoviesCard />
       </ul>
-      <button type="button" className="movies-card-list__button">
-        Ещё
-      </button>
     </section>
   );
 }

@@ -21,6 +21,9 @@ function Movies({
       <main className="movies__content">
         <SearchForm />
         <MoviesCardList />
+        <button type="button" className="movies__button">
+          Ещё
+        </button>
       </main>
       <Footer />
     </>

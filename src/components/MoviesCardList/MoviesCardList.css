@@ -14,28 +14,6 @@
   justify-items: center;
 }
 
-.movies-card-list__button {
-  color: #fff;
-  text-align: center;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: normal;
-  width: 100%;
-  padding: 10px 0;
-  margin: 60px 0 90px;
-  border-radius: 6px;
-  background: #2f2f2f;
-  color: #fff;
-  transition: 0.3s all;
-  cursor: pointer;
-  border: none;
-  outline: none;
-}
-
-.movies-card-list__button:hover {
-  opacity: 0.8;
-}
-
 @media (max-width: 621px) {
   .movies-card-list__container {
     gap: 16px;
