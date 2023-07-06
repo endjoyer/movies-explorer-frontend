@@ -1,21 +1,26 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import Form from "../Form";
 import { useForm } from "react-hook-form";
+import Form from "../Form/Form.js";
 
-const Register = ({ onRegister }) => {
+function Register({ onAuthorization, isLoading }) {
   const {
     register,
     formState: { errors, isValid },
+    getValues,
     reset,
-    handleSubmit,
   } = useForm({
     mode: "onChange",
     criteriaMode: "all",
   });
 
-  const onSubmit = (data) => {
-    onRegister(data);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    onAuthorization(
+      getValues("password"),
+      getValues("email"),
+      getValues("name")
+    );
   };
 
   useEffect(() => {
@@ -23,19 +28,42 @@ const Register = ({ onRegister }) => {
   }, [reset]);
 
   return (
-    <div className="auth">
+    <>
       <Form
-        name="auth"
-        title="Регистрация"
-        onSubmit={handleSubmit(onSubmit)}
-        btnText="Зарегистрироваться"
+        name="register"
+        title="Добро пожаловать!"
+        isLoading={isLoading}
+        onSubmit={handleSubmit}
+        btnText="Регистрация"
         isValid={isValid}
       >
-        <label className="popup__label">
+        <label className="register__label">
+          <p className="register__input-name">Имя</p>
           <input
-            className="popup__input popup__input_auth"
+            className="register__input"
+            name="name"
+            type="text"
+            {...register("name", {
+              required: "Заполните это поле.",
+              minLength: {
+                value: 2,
+                message: "Минимум 2 символа.",
+              },
+              maxLength: {
+                value: 40,
+                message: "Максимум 40 символов.",
+              },
+            })}
+          />
+          <span className="register__input-error register__input-error_active">
+            {errors?.name?.message}
+          </span>
+        </label>
+        <label className="register__label">
+          <p className="register__input-name">E-mail</p>
+          <input
+            className="register__input"
             name="email"
-            placeholder="Email"
             type="email"
             {...register("email", {
               required: "Заполните это поле.",
@@ -49,15 +77,15 @@ const Register = ({ onRegister }) => {
               },
             })}
           />
-          <span className="email-error popup__input-error popup__input-error_active">
+          <span className="register__input-error register__input-error_active">
             {errors?.email && errors?.email?.message}
           </span>
         </label>
-        <label className="popup__label">
+        <label className="register__label">
+          <p className="register__input-name">Пароль</p>
           <input
-            className="popup__input popup__input_auth"
+            className="register__input"
             name="password"
-            placeholder="Пароль"
             type="password"
             {...register("password", {
               required: "Заполните это поле.",
@@ -71,19 +99,13 @@ const Register = ({ onRegister }) => {
               },
             })}
           />
-          <span className="password-error popup__input-error popup__input-error_active">
+          <span className="register__input-error register__input-error_active">
             {errors?.password && errors?.password?.message}
           </span>
         </label>
-        <div className="auth__signup">
-          <p className="signup__text">Уже зарегистрированы?</p>
-          <Link to="/signin" className="signup__link">
-            Войти
-          </Link>
-        </div>
       </Form>
-    </div>
+    </>
   );
-};
+}
 
 export default Register;

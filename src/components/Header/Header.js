@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import HamburgerMenu from "./HamburgerMenu/HamburgerMenu";
+import Logo from "../Logo/Logo";
 
 function Header() {
   const { pathname } = useLocation();
@@ -10,9 +11,7 @@ function Header() {
   const isProfilePage = pathname === "/profile";
   return (
     <header className="header">
-      <Link to="/">
-        <div className="header__logo" />
-      </Link>
+      <Logo />
       {isMainPage ? (
         <nav>
           <Link to="/signup" className="header__link">

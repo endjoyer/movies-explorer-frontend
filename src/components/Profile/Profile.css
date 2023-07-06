@@ -1,7 +1,3 @@
-.profile__labels {
-  margin: 120px 0 0;
-}
-
 .profile__label {
   width: 100%;
   position: relative;
@@ -46,14 +42,13 @@
   border-bottom: 1px solid #ee3465;
 }
 
-.profile__input-error {
+.login__input-error {
   display: block;
-  max-width: 358px;
-  min-height: 32px;
-  margin: 3px 0 0;
+  min-height: 24px;
+  margin: 6px 0 0;
   font-weight: 400;
-  font-size: 12px;
-  line-height: 15px;
+  font-size: 10px;
+  line-height: normal;
   color: #ee3465;
   opacity: 0;
   transition: 0.3s all;
@@ -61,24 +56,4 @@
 
 .profile__input-error_active {
   opacity: 1;
-}
-
-.profile__exit {
-  margin: 0 auto 70px;
-  padding: 2px 0;
-  width: max-content;
-  display: block;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #202020;
-  cursor: pointer;
-  border: none;
-  outline: none;
-  transition: 0.3s all;
-  color: #ee3465;
-  font-size: 13px;
-  font-weight: 500;
-  line-height: normal;
 }

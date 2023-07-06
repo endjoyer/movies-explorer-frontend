@@ -1,37 +1,43 @@
 import { useEffect } from "react";
-import Form from "../Form";
 import { useForm } from "react-hook-form";
+import Form from "../Form/Form.js";
+import Logo from "../Logo/Logo.js";
 
-const Login = ({ onAuthorization }) => {
+function Login({ onAuthorization, isLoading }) {
   const {
     register,
     formState: { errors, isValid },
     getValues,
     reset,
-  } = useForm({ mode: "onChange", criteriaMode: "all" });
+  } = useForm({
+    mode: "onChange",
+    criteriaMode: "all",
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     onAuthorization(getValues("password"), getValues("email"));
   };
+
   useEffect(() => {
     reset();
   }, [reset]);
 
   return (
-    <div className="auth">
+    <>
       <Form
-        name="auth"
-        title="Вход"
+        name="login"
+        title="Рады видеть!"
+        isLoading={isLoading}
         onSubmit={handleSubmit}
         btnText="Войти"
         isValid={isValid}
       >
-        <label className="popup__label">
+        <label className="login__label">
+          <p className="login__input-name">E-mail</p>
           <input
-            className="popup__input popup__input_auth"
-            placeholder="Email"
+            className="login__input"
             name="email"
             type="email"
             {...register("email", {
@@ -46,15 +52,15 @@ const Login = ({ onAuthorization }) => {
               },
             })}
           />
-          <span className="popup__input-error popup__input-error_active">
+          <span className="login__input-error login__input-error_active">
             {errors?.email && errors?.email?.message}
           </span>
         </label>
-        <label className="popup__label">
+        <label className="login__label">
+          <p className="login__input-name">Пароль</p>
           <input
-            className="popup__input popup__input_auth"
+            className="login__input"
             name="password"
-            placeholder="Пароль"
             type="password"
             {...register("password", {
               required: "Заполните это поле.",
@@ -68,13 +74,13 @@ const Login = ({ onAuthorization }) => {
               },
             })}
           />
-          <span className="popup__input-error popup__input-error_active">
+          <span className="login__input-error login__input-error_active">
             {errors?.password && errors?.password?.message}
           </span>
         </label>
       </Form>
-    </div>
+    </>
   );
-};
+}
 
 export default Login;

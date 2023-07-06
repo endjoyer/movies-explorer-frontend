@@ -33,52 +33,49 @@ function Profile({ onEditProfile, isLoading }) {
         btnText="Редактировать"
         isValid={isValid}
       >
-        <div className="profile__labels">
-          <label className="profile__label">
-            <p className="profile__input-name">Имя</p>
-            <input
-              className="profile__input"
-              type="text"
-              {...register("name", {
-                required: "Заполните это поле.",
-                minLength: {
-                  value: 2,
-                  message: "Минимум 2 символа.",
-                },
-                maxLength: {
-                  value: 40,
-                  message: "Максимум 40 символов.",
-                },
-              })}
-            />
-            <span className="profile__input-error profile__input-error_active">
-              {errors?.name?.message}
-            </span>
-          </label>
-          <label className="profile__label">
-            <p className="profile__input-name">E-mail</p>
-            <input
-              className="profile__input"
-              name="email"
-              type="email"
-              {...register("email", {
-                required: "Заполните это поле.",
-                minLength: {
-                  value: 5,
-                  message: "Минимум 5 символов.",
-                },
-                maxLength: {
-                  value: 40,
-                  message: "Максимум 40 символов.",
-                },
-              })}
-            />
-            <span className="profile__input-error profile__input-error_active">
-              {errors?.email && errors?.email?.message}
-            </span>
-          </label>
-        </div>
-        <button className="profile__exit">Выйти из аккаунта</button>
+        <label className="profile__label">
+          <p className="profile__input-name">Имя</p>
+          <input
+            className="profile__input"
+            type="text"
+            {...register("name", {
+              required: "Заполните это поле.",
+              minLength: {
+                value: 2,
+                message: "Минимум 2 символа.",
+              },
+              maxLength: {
+                value: 40,
+                message: "Максимум 40 символов.",
+              },
+            })}
+          />
+          <span className="profile__input-error profile__input-error_active">
+            {errors?.name?.message}
+          </span>
+        </label>
+        <label className="profile__label">
+          <p className="profile__input-name">E-mail</p>
+          <input
+            className="profile__input"
+            name="email"
+            type="email"
+            {...register("email", {
+              required: "Заполните это поле.",
+              minLength: {
+                value: 5,
+                message: "Минимум 5 символов.",
+              },
+              maxLength: {
+                value: 40,
+                message: "Максимум 40 символов.",
+              },
+            })}
+          />
+          <span className="profile__input-error profile__input-error_active">
+            {errors?.email && errors?.email?.message}
+          </span>
+        </label>
       </Form>
     </>
   );
