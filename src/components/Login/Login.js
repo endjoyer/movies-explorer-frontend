@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Form from "../Form/Form.js";
-import Logo from "../Logo/Logo.js";
 
 function Login({ onAuthorization, isLoading }) {
   const {

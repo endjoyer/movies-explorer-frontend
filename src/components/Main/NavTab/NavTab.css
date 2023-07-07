@@ -32,6 +32,9 @@
 }
 
 @media (max-width: 621px) {
+  .navtab__list-item {
+    width: 82px;
+  }
   .navtab__button {
     padding: 5px 0;
     font-size: 10px;

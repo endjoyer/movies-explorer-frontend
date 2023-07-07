@@ -64,7 +64,7 @@
   opacity: 0.8;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 800px) {
   .about-me {
     margin: 0 50px;
   }

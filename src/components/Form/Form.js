@@ -14,7 +14,7 @@ function Form({
   return (
     <>
       <form
-        className={`form ${name === "auth" ? "form_auth" : ""}`}
+        className={`form ${name === "profile" && "form_profile"}`}
         onSubmit={onSubmit}
         noValidate
       >
@@ -44,7 +44,7 @@ function Form({
             (name === "login" && (
               <div className="form__link-container">
                 Ещё не зарегистрированы?
-                <Link to="/signin" className="form__link">
+                <Link to="/signup" className="form__link">
                   Регистрация
                 </Link>
               </div>
@@ -52,7 +52,7 @@ function Form({
             (name === "register" && (
               <div className="form__link-container">
                 Уже зарегистрированы?
-                <Link to="/signup" className="form__link">
+                <Link to="/signin" className="form__link">
                   Войти
                 </Link>
               </div>

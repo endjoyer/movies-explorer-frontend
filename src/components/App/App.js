@@ -7,6 +7,7 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile.js";
 import Login from "../Login/Login.js";
 import Register from "../Register/Register.js";
+import NotFound from "../NotFound/NotFound";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({
@@ -26,6 +27,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/signin" element={<Login />} />
             <Route path="/signup" element={<Register />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </div>

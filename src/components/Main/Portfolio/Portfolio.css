@@ -51,7 +51,7 @@
   margin: 0;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 800px) {
   .portfolio {
     margin: 0 50px;
   }

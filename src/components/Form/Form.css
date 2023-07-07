@@ -4,10 +4,14 @@
   color: #fff;
   max-width: 410px;
   padding: 70px 0;
-  height: 100vh;
+  min-height: 100vh;
   position: relative;
   display: flex;
   flex-direction: column;
+}
+
+.form_profile {
+  min-height: calc(100vh - 74px);
 }
 
 .form__title {
@@ -100,15 +104,9 @@
   opacity: 0.8;
 }
 
-@media (max-width: 800px) {
-  .form {
-    padding: 17vh 30px 70px;
-  }
-}
-
 @media (max-width: 621px) {
   .form {
-    padding: 60px 0 35px;
+    padding: 60px 30px 35px;
     align-items: center;
   }
   .form__buttons {

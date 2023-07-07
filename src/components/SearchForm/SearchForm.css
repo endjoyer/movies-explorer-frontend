@@ -40,6 +40,9 @@
   background: #4285f4;
   border-radius: 40px;
   color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
   transition: 0.3s all;
   cursor: pointer;
   border: none;
@@ -54,4 +57,14 @@
   margin: 30px 0 0;
   display: flex;
   justify-content: center;
+}
+
+@media (max-width: 621px) {
+  .search__input {
+    font-size: 12px;
+    height: 44px;
+  }
+  .search__button {
+    font-size: 12px;
+  }
 }

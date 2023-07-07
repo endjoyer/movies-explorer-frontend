@@ -1,6 +1,6 @@
 // import { useContext } from "react";
 // import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import img from "../../images/plug.png";
+import plug from "../../images/plug.png";
 
 function MoviesCard({ card, onCardSave, onCardClick, onCardDelete }) {
   //   const { _id: currentUserId } = useContext(CurrentUserContext);
@@ -25,7 +25,7 @@ function MoviesCard({ card, onCardSave, onCardClick, onCardDelete }) {
         <p className="movies-card__time">n минут</p>
       </div>
       <div className="movies-card__image-container " onClick={handleCardClick}>
-        <img className="movies-card__image" alt="Заглушка" src={img} />
+        <img className="movies-card__image" alt="Заглушка" src={plug} />
       </div>
       <div className="movies-card__button-container">
         <button

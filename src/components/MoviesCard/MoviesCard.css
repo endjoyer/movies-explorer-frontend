@@ -71,16 +71,16 @@
   outline: none;
 }
 
+.movies-card__button:hover {
+  opacity: 0.8;
+}
+
 .movies-card__button_active {
   background: url("../../images/ok.svg") #ee3465 center no-repeat;
 }
 
 .movies-card__button_delete {
-  background: url("../../images/ok.svg") #313131 center no-repeat;
-}
-
-.movies-card__button:hover {
-  opacity: 0.8;
+  background: url("../../images/delete.svg") #313131 center no-repeat;
 }
 
 @media (max-width: 621px) {

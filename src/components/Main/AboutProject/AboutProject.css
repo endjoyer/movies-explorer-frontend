@@ -69,7 +69,7 @@
   color: #000;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 800px) {
   .about-project {
     margin: 0 50px;
   }
