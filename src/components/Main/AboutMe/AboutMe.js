@@ -25,7 +25,12 @@ function AboutMe({ aboutMeRef }) {
             место. Мне очень нравиться специальность, которую я выбрал, и
             достигаемые в ней успехи.
           </p>
-          <a href="https://github.com/endjoyer" className="about-me__link">
+          <a
+            href="https://github.com/endjoyer"
+            target="_blank"
+            rel="noreferrer"
+            className="about-me__link"
+          >
             Github
           </a>
         </div>

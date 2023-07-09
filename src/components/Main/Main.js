@@ -33,15 +33,17 @@ function Main() {
   return (
     <>
       <Header />
-      <Promo
-        scrollToAboutProject={scrollToAboutProject}
-        scrollToTechs={scrollToTechs}
-        scrollToAboutMe={scrollToAboutMe}
-      />
-      <AboutProject aboutProjectRef={aboutProjectRef} />
-      <Techs techsRef={techsRef} />
-      <AboutMe aboutMeRef={aboutMeRef} />
-      <Portfolio />
+      <main className="main__content">
+        <Promo
+          scrollToAboutProject={scrollToAboutProject}
+          scrollToTechs={scrollToTechs}
+          scrollToAboutMe={scrollToAboutMe}
+        />
+        <AboutProject aboutProjectRef={aboutProjectRef} />
+        <Techs techsRef={techsRef} />
+        <AboutMe aboutMeRef={aboutMeRef} />
+        <Portfolio />
+      </main>
       <Footer />
     </>
   );

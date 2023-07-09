@@ -3,6 +3,7 @@
   margin: 0 70px;
   padding: 80px 0;
   min-height: 100vh;
+  max-width: 1280px;
 }
 
 .movies__button {

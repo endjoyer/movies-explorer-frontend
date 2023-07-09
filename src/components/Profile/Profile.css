@@ -1,3 +1,8 @@
+.profile__content {
+  max-width: 410px;
+  margin: 0 auto;
+}
+
 .profile__label {
   width: 100%;
   position: relative;

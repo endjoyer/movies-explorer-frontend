@@ -6,6 +6,8 @@ function Portfolio() {
         <li className="portfolio__list-item">
           <a
             href="https://github.com/endjoyer/react-mesto-api-full-gha"
+            target="_blank"
+            rel="noreferrer"
             className="portfolio__link"
           >
             <p className="portfolio__project-name">
@@ -17,6 +19,8 @@ function Portfolio() {
         <li className="portfolio__list-item">
           <a
             href="https://github.com/endjoyer/ya-pack-solution"
+            target="_blank"
+            rel="noreferrer"
             className="portfolio__link"
           >
             <p className="portfolio__project-name">
@@ -28,6 +32,8 @@ function Portfolio() {
         <li className="portfolio__list-item">
           <a
             href="https://github.com/endjoyer/neural-networks"
+            target="_blank"
+            rel="noreferrer"
             className="portfolio__link"
           >
             <p className="portfolio__project-name">
@@ -39,6 +45,8 @@ function Portfolio() {
         <li className="portfolio__list-item">
           <a
             href="https://github.com/endjoyer/how-to-learn"
+            target="_blank"
+            rel="noreferrer"
             className="portfolio__link"
           >
             <p className="portfolio__project-name">
@@ -50,6 +58,8 @@ function Portfolio() {
         <li className="portfolio__list-item">
           <a
             href="https://github.com/endjoyer/russian-travel"
+            target="_blank"
+            rel="noreferrer"
             className="portfolio__link"
           >
             <p className="portfolio__project-name">

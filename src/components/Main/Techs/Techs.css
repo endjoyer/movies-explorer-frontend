@@ -7,19 +7,31 @@
   padding: 50px 0;
   background: #272727;
   margin: 0;
-  width: 98.9vw;
   position: relative;
+  z-index: 1;
+}
+
+.techs::before {
+  content: "";
+  position: absolute;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
+  min-height: 100vh;
+  width: 100vw;
+  background: #272727;
+  z-index: 0;
 }
 .techs__contend {
   box-sizing: border-box;
   margin: 0 70px;
+  z-index: 1;
 }
 
 .techs__title-container {
   margin: 0 70px;
   max-width: 1140px;
+  z-index: 1;
 }
 
 .techs__subtitle {

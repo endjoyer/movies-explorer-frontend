@@ -1,6 +1,7 @@
 .saved-movies__content {
   margin: 0 70px;
   padding: 90px 0;
+  max-width: 1280px;
   min-height: calc(100vh - 74px - 116px);
 }
 
