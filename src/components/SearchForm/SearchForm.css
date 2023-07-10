@@ -59,6 +59,18 @@
   justify-content: center;
 }
 
+.search__input-error {
+  display: block;
+  min-height: 24px;
+  margin: 8px 100px 0 22px;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: normal;
+  color: #ee3465;
+  opacity: 1;
+  transition: 0.3s all;
+}
+
 @media (max-width: 621px) {
   .search__input {
     font-size: 12px;
