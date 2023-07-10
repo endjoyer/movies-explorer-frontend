@@ -7,7 +7,7 @@ function Movies() {
   return (
     <>
       <Header />
-      <main className="movies__content">
+      <main className="movies">
         <SearchForm />
         <MoviesCardList />
         <button type="button" className="movies__button">

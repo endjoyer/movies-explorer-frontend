@@ -33,7 +33,7 @@ function Main() {
   return (
     <>
       <Header />
-      <main className="main__content">
+      <main className="main">
         <Promo
           scrollToAboutProject={scrollToAboutProject}
           scrollToTechs={scrollToTechs}

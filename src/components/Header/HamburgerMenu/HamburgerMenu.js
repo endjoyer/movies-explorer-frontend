@@ -14,7 +14,6 @@ function HamburgerMenu({
       </label>
 
       <ul className="hamburger-menu__box">
-        <div className="hamburger-menu__cover" />
         <li>
           <Link
             to="/"

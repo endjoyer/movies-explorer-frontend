@@ -29,7 +29,7 @@ function Register({ onAuthorization, isLoading }) {
 
   return (
     <>
-      <main className="register__content">
+      <main className="register">
         <Form
           name="register"
           title="Добро пожаловать!"
@@ -39,7 +39,7 @@ function Register({ onAuthorization, isLoading }) {
           isValid={isValid}
         >
           <label className="register__label">
-            <p className="register__input-name">Имя</p>
+            <span className="register__input-name">Имя</span>
             <input
               className="register__input"
               name="name"
@@ -61,7 +61,7 @@ function Register({ onAuthorization, isLoading }) {
             </span>
           </label>
           <label className="register__label">
-            <p className="register__input-name">E-mail</p>
+            <span className="register__input-name">E-mail</span>
             <input
               className="register__input"
               name="email"
@@ -83,7 +83,7 @@ function Register({ onAuthorization, isLoading }) {
             </span>
           </label>
           <label className="register__label">
-            <p className="register__input-name">Пароль</p>
+            <span className="register__input-name">Пароль</span>
             <input
               className="register__input"
               name="password"

@@ -25,7 +25,7 @@ function Profile({ onEditProfile, isLoading }) {
   return (
     <>
       <Header />
-      <main className="profile__content">
+      <main className="profile">
         <Form
           name="profile"
           title={`Привет, "Имя пользователя"!`}
@@ -35,7 +35,7 @@ function Profile({ onEditProfile, isLoading }) {
           isValid={isValid}
         >
           <label className="profile__label">
-            <p className="profile__input-name">Имя</p>
+            <span className="profile__input-name">Имя</span>
             <input
               className="profile__input"
               type="text"
@@ -56,7 +56,7 @@ function Profile({ onEditProfile, isLoading }) {
             </span>
           </label>
           <label className="profile__label">
-            <p className="profile__input-name">E-mail</p>
+            <span className="profile__input-name">E-mail</span>
             <input
               className="profile__input"
               name="email"
