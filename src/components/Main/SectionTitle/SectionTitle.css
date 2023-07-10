@@ -1,0 +1,23 @@
+.section-title {
+  font-size: 22px;
+  line-height: 26px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  padding: 23px 0 0;
+  border-bottom: 1px solid #dadada;
+}
+
+@media (max-width: 621px) {
+  .section-title {
+    font-size: 18px;
+    line-height: normal;
+  }
+  .section-title::after {
+    padding: 28px 0 0;
+  }
+}

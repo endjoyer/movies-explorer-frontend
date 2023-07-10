@@ -1,0 +1,19 @@
+.app {
+  background: #202020;
+  color: #fff;
+  margin: 0 auto;
+  min-height: 100vh;
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+}
+.app__container {
+  max-width: 100%;
+  margin: 0 auto;
+}
