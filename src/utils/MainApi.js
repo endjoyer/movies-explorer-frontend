@@ -57,16 +57,24 @@ export const editUserAvatar = async (data) => {
   return requestResult(res);
 };
 
-export const postCard = async (data) => {
-  const res = await fetch(`${BASE_URL}cards`, {
+export const saveMovies = async (data) => {
+  const res = await fetch(`${BASE_URL}movies`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
     body: JSON.stringify({
-      name: data.name,
-      link: data.link,
+      country: data.country,
+      director: data.director,
+      duration: data.duration,
+      year: data.year,
+      description: data.description,
+      image: data.image.url,
+      trailerLink: data.trailerLink,
+      thumbnail: data.previewUrl,
+      movieId: data.id,
+      nameRU: data.nameRU,
+      nameEN: data.nameEN,
     }),
   });
   return requestResult(res);

@@ -2,30 +2,43 @@
 // import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import plug from "../../images/plug.png";
 
-function MoviesCard({ card, onCardSave, onCardClick, onCardDelete }) {
+function MoviesCard({ card, setMovieToSave, onSaveMovies }) {
   //   const { _id: currentUserId } = useContext(CurrentUserContext);
   //   const isSaved = card.likes.some((user) => user === currentUserId);
   const isSaved = false;
   //   const isOwn = card.owner === currentUserId;
 
   function handleSaveClick() {
-    onCardSave(card);
+    setMovieToSave(card);
+    console.log(card.id);
+    onSaveMovies();
   }
-  function handleCardClick() {
-    onCardClick(card);
-  }
+  // function handleCardClick() {
+  //   // onCardClick(card);
+  // }
   function handleDeleteClick() {
-    onCardDelete(card);
+    // onCardDelete(card);
   }
 
   return (
     <li className="movies-card">
       <div className="movies-card__text">
-        <h2 className="movies-card__name">Здесь будет название</h2>
-        <p className="movies-card__time">n минут</p>
+        <p className="movies-card__name">{card.nameRU}</p>
+        <span className="movies-card__time">{card.duration} минут</span>
       </div>
-      <div className="movies-card__image-container " onClick={handleCardClick}>
-        <img className="movies-card__image" alt="Заглушка" src={plug} />
+      <div className="movies-card__image-container">
+        <a
+          href={card.trailerLink}
+          target="_blank"
+          rel="noreferrer"
+          className="movies-card__link"
+        >
+          <img
+            className="movies-card__image"
+            alt={card.nameRU}
+            src={`https://api.nomoreparties.co/${card.image.url}`}
+          />
+        </a>
       </div>
       <div className="movies-card__button-container">
         <button

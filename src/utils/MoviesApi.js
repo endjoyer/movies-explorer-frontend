@@ -1,4 +1,4 @@
-export const BASE_URL = "https://api.nomoreparties.co/beatfilm-movies2/";
+export const BASE_URL = "https://api.nomoreparties.co/beatfilm-movies/";
 
 function requestResult(res) {
   if (res.ok) {
