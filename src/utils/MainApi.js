@@ -1,4 +1,5 @@
-export const BASE_URL = "https://api.endjoys.project.nomoredomains.rocks/";
+// export const BASE_URL = "https://api.endjoys.project.nomoredomains.rocks/";
+export const BASE_URL = "http://localhost:3000/";
 
 function requestResult(res) {
   if (res.ok) {
@@ -28,7 +29,7 @@ export const getInitialUser = async () => {
   return requestResult(res);
 };
 
-export const editUser = async (data) => {
+export const editUserInfo = async (name, email) => {
   const res = await fetch(`${BASE_URL}users/me`, {
     method: "PATCH",
     headers: {
@@ -36,8 +37,8 @@ export const editUser = async (data) => {
     },
     credentials: "include",
     body: JSON.stringify({
-      name: data.name,
-      about: data.about,
+      name,
+      email,
     }),
   });
   return requestResult(res);
@@ -102,13 +103,14 @@ export const changeLikeCardStatus = async (cardId, isLiked) => {
   return requestResult(res);
 };
 
-export const register = async (password, email) => {
+export const registration = async (name, email, password) => {
   const res = await fetch(`${BASE_URL}signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ password, email }),
+    credentials: "include",
+    body: JSON.stringify({ name, email, password }),
   });
   return requestResult(res);
 };

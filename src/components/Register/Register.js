@@ -1,8 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Form from "../Form/Form.js";
+import { useNavigate } from "react-router-dom";
+import { registration } from "../../utils/MainApi.js";
 
-function Register({ onAuthorization, isLoading }) {
+function Register({ onRegister, isLoading }) {
+  const [registerError, setRegisterError] = useState("");
+  const navigate = useNavigate();
+
   const {
     register,
     formState: { errors, isValid },
@@ -16,16 +21,29 @@ function Register({ onAuthorization, isLoading }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    onAuthorization(
-      getValues("password"),
-      getValues("email"),
-      getValues("name")
-    );
+    registration(getValues("name"), getValues("email"), getValues("password"))
+      .then((res) => {
+        if (res) {
+          navigate("/signin", {
+            replace: true,
+          });
+        }
+      })
+      .catch((err) => {
+        setRegisterError(
+          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
+        );
+      });
+    onRegister();
   };
 
   useEffect(() => {
     reset();
-  }, [reset]);
+  }, []);
+
+  useEffect(() => {
+    setRegisterError("");
+  }, [register]);
 
   return (
     <>
@@ -76,6 +94,10 @@ function Register({ onAuthorization, isLoading }) {
                   value: 40,
                   message: "Максимум 40 символов.",
                 },
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                  message: "Неверный формат электронной почты",
+                },
               })}
             />
             <span className="register__input-error register__input-error_active">
@@ -101,7 +123,7 @@ function Register({ onAuthorization, isLoading }) {
               })}
             />
             <span className="register__input-error register__input-error_active">
-              {errors?.password && errors?.password?.message}
+              {(errors?.password && errors?.password?.message) || registerError}
             </span>
           </label>
         </Form>

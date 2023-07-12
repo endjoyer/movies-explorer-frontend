@@ -1,8 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Form from "../Form/Form.js";
+import { authorize } from "../../utils/MainApi.js";
+import { useNavigate } from "react-router-dom";
 
 function Login({ onAuthorization, isLoading }) {
+  const [authorizeError, setAuthorizeError] = useState("");
+  const navigate = useNavigate();
+
   const {
     register,
     formState: { errors, isValid },
@@ -16,7 +21,17 @@ function Login({ onAuthorization, isLoading }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    onAuthorization(getValues("password"), getValues("email"));
+    authorize(getValues("password"), getValues("email"))
+      .then((user) => {
+        if (user._id) {
+          navigate("/", { replace: true });
+        }
+      })
+      .catch((err) => {
+        setAuthorizeError(
+          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
+        );
+      });
   };
 
   useEffect(() => {
@@ -74,7 +89,7 @@ function Login({ onAuthorization, isLoading }) {
             })}
           />
           <span className="login__input-error login__input-error_active">
-            {errors?.password && errors?.password?.message}
+            {(errors?.password && errors?.password?.message) || authorizeError}
           </span>
         </label>
       </Form>

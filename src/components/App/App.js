@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import Main from "../Main/Main.js";
 import Movies from "../Movies/Movies.js";
@@ -8,13 +8,38 @@ import Profile from "../Profile/Profile.js";
 import Login from "../Login/Login.js";
 import Register from "../Register/Register.js";
 import NotFound from "../NotFound/NotFound";
+import { checkToken } from "../../utils/MainApi";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({
-    name: "Aleksey",
-    email: "test@test.ru",
-    loggeIn: false,
-  });
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      checkToken(userId)
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            setCurrentUser(res);
+            console.log(res);
+          }
+        })
+        .then(() => {
+          if (
+            window.location.pathname === "/signin" ||
+            window.location.pathname === "/signup"
+          ) {
+            navigate("/", { replace: true });
+          }
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
+    }
+  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -24,7 +49,10 @@ function App() {
             <Route path="/" element={<Main />} />
             <Route path="/movies" element={<Movies />} />
             <Route path="/saved-movies" element={<SavedMovies />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route
+              path="/profile"
+              element={<Profile setCurrentUser={setCurrentUser} />}
+            />
             <Route path="/signin" element={<Login />} />
             <Route path="/signup" element={<Register />} />
             <Route path="*" element={<NotFound />} />

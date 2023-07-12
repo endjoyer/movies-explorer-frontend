@@ -1,26 +1,52 @@
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Form from "../Form/Form.js";
 import Header from "../Header/Header.js";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { editUserInfo } from "../../utils/MainApi.js";
 
-function Profile({ onEditProfile, isLoading }) {
+function Profile({ onEditProfile, isLoading, setCurrentUser }) {
+  const { name: contextName, email: contextEmail } =
+    useContext(CurrentUserContext);
+  const [name, setName] = useState(contextName);
+  const [email, setEmail] = useState(contextEmail);
+  const [isFormValid, setIsFormValid] = useState(false);
   const {
     register,
-    formState: { errors, isValid },
+    formState: { errors },
     getValues,
+    watch,
   } = useForm({
     mode: "onChange",
     criteriaMode: "all",
   });
 
+  const watchAll = watch();
+
+  useEffect(() => {
+    setIsFormValid(Object.keys(watchAll).some((key) => watchAll[key] !== ""));
+  }, [watchAll]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const name = getValues("name");
-    const email = getValues("email");
-    onEditProfile({ name, email });
+    const newName = getValues("name") !== "" ? getValues("name") : contextName;
+    const newEmail =
+      getValues("email") !== "" ? getValues("email") : contextEmail;
+    editUserInfo(newName, newEmail)
+      .then((data) => {
+        setCurrentUser(data);
+        setName(data.name);
+        setEmail(data.email);
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      });
   };
 
-  useEffect(() => {}, [onEditProfile]);
+  useEffect(() => {
+    setName(contextName);
+    setEmail(contextEmail);
+  }, [contextName, contextEmail]);
 
   return (
     <>
@@ -28,11 +54,11 @@ function Profile({ onEditProfile, isLoading }) {
       <main className="profile">
         <Form
           name="profile"
-          title={`Привет, "Имя пользователя"!`}
+          title={`Привет, ${name}!`}
           isLoading={isLoading}
           onSubmit={handleSubmit}
           btnText="Редактировать"
-          isValid={isValid}
+          isValid={isFormValid}
         >
           <label className="profile__label">
             <span className="profile__input-name">Имя</span>
@@ -50,6 +76,7 @@ function Profile({ onEditProfile, isLoading }) {
                   message: "Максимум 40 символов.",
                 },
               })}
+              defaultValue={name}
             />
             <span className="profile__input-error profile__input-error_active">
               {errors?.name?.message}
@@ -72,6 +99,7 @@ function Profile({ onEditProfile, isLoading }) {
                   message: "Максимум 40 символов.",
                 },
               })}
+              defaultValue={email}
             />
             <span className="profile__input-error profile__input-error_active">
               {errors?.email && errors?.email?.message}

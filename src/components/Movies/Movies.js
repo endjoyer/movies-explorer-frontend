@@ -241,9 +241,8 @@ function Movies() {
   };
 
   const handleSaveMovies = () => {
-    const filteredStringifyMovies = localStorage.getItem("filteredMovies");
-    if (filteredStringifyMovies) {
-      const filteredMovies = JSON.parse(filteredStringifyMovies);
+    const filteredMovies = JSON.parse(localStorage.getItem("filteredMovies"));
+    if (filteredMovies) {
       saveMovies(movieToSave)
         .then(() => {
           console.log(movieToSave);
@@ -286,16 +285,17 @@ function Movies() {
           setMovieToSave={setMovieToSave}
           onSaveMovies={handleSaveMovies}
         />
-        {visibleCards.length <
-          JSON.parse(localStorage.getItem("filteredMovies")).length && (
-          <button
-            type="button"
-            className="movies__button"
-            onClick={handleLoadMore}
-          >
-            Ещё
-          </button>
-        )}
+        {localStorage.getItem("filteredMovies") &&
+          visibleCards.length <
+            JSON.parse(localStorage.getItem("filteredMovies")).length && (
+            <button
+              type="button"
+              className="movies__button"
+              onClick={handleLoadMore}
+            >
+              Ещё
+            </button>
+          )}
       </main>
       <Footer />
     </>
