@@ -5,7 +5,7 @@ import Header from "../Header/Header.js";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { editUserInfo } from "../../utils/MainApi.js";
 
-function Profile({ onEditProfile, isLoading, setCurrentUser }) {
+function Profile({ onExit, isLoading, setCurrentUser }) {
   const { name: contextName, email: contextEmail } =
     useContext(CurrentUserContext);
   const [name, setName] = useState(contextName);
@@ -59,6 +59,7 @@ function Profile({ onEditProfile, isLoading, setCurrentUser }) {
           onSubmit={handleSubmit}
           btnText="Редактировать"
           isValid={isFormValid}
+          onExit={onExit}
         >
           <label className="profile__label">
             <span className="profile__input-name">Имя</span>

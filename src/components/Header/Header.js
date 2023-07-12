@@ -11,7 +11,7 @@ function Header() {
   const isMoviesPage = pathname === "/movies";
   const isSavedMoviesPage = pathname === "/saved-movies";
   const isProfilePage = pathname === "/profile";
-  console.log(userId);
+
   return (
     <header className="header">
       <Logo />

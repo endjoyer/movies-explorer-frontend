@@ -1,6 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { getLogoutUser } from "../../utils/MainApi";
+import { Link } from "react-router-dom";
 import Logo from "../Logo/Logo";
 
 function Form({
@@ -11,14 +10,12 @@ function Form({
   isLoading,
   btnText,
   isValid,
+  onExit,
 }) {
-  const navigate = useNavigate();
-
-  function handleSignOut() {
-    localStorage.clear("userId");
-    getLogoutUser();
-    navigate("/signin", { replace: true });
+  function handleExit() {
+    onExit();
   }
+
   return (
     <>
       <form
@@ -45,11 +42,7 @@ function Form({
             {btnText}
           </button>
           {name === "profile" ? (
-            <button
-              type="button"
-              onClick={handleSignOut}
-              className="form__exit"
-            >
+            <button type="button" onClick={handleExit} className="form__exit">
               Выйти из аккаунта
             </button>
           ) : (

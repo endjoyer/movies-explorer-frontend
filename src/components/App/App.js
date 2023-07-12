@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute";
 import Main from "../Main/Main.js";
 import Movies from "../Movies/Movies.js";
 import SavedMovies from "../SavedMovies/SavedMovies";
@@ -8,23 +9,21 @@ import Profile from "../Profile/Profile.js";
 import Login from "../Login/Login.js";
 import Register from "../Register/Register.js";
 import NotFound from "../NotFound/NotFound";
-import { checkToken } from "../../utils/MainApi";
+import { checkToken, getInitialUser, getLogoutUser } from "../../utils/MainApi";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const userId = localStorage.getItem("userId");
   const [currentUser, setCurrentUser] = useState({});
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
+    console.log(userId);
     if (userId) {
       checkToken(userId)
         .then((res) => {
           if (res) {
-            setLoggedIn(true);
             setCurrentUser(res);
-            console.log(res);
           }
         })
         .then(() => {
@@ -37,9 +36,17 @@ function App() {
         })
         .catch((err) => {
           console.log(`Ошибка: ${err}`);
+          localStorage.removeItem("userId");
         });
     }
-  }, []);
+  }, [navigate, userId]);
+
+  function handleSignOut() {
+    localStorage.removeItem("userId");
+    getLogoutUser();
+    setCurrentUser({});
+    navigate("/signin", { replace: true });
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -47,11 +54,28 @@ function App() {
         <div className="app__container">
           <Routes>
             <Route path="/" element={<Main />} />
-            <Route path="/movies" element={<Movies />} />
-            <Route path="/saved-movies" element={<SavedMovies />} />
+            <Route
+              path="/movies"
+              element={
+                <ProtectedRouteElement element={Movies} userId={userId} />
+              }
+            />
+            <Route
+              path="/saved-movies"
+              element={
+                <ProtectedRouteElement element={SavedMovies} userId={userId} />
+              }
+            />
             <Route
               path="/profile"
-              element={<Profile setCurrentUser={setCurrentUser} />}
+              element={
+                <ProtectedRouteElement
+                  element={Profile}
+                  setCurrentUser={setCurrentUser}
+                  onExit={handleSignOut}
+                  userId={userId}
+                />
+              }
             />
             <Route path="/signin" element={<Login />} />
             <Route path="/signup" element={<Register />} />
