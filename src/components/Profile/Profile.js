@@ -11,6 +11,8 @@ function Profile({ onExit, isLoading, setCurrentUser }) {
   const [name, setName] = useState(contextName);
   const [email, setEmail] = useState(contextEmail);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [resServerError, setResServerError] = useState("");
+
   const {
     register,
     formState: { errors },
@@ -34,11 +36,15 @@ function Profile({ onExit, isLoading, setCurrentUser }) {
       getValues("email") !== "" ? getValues("email") : contextEmail;
     editUserInfo(newName, newEmail)
       .then((data) => {
+        setResServerError("");
         setCurrentUser(data);
         setName(data.name);
         setEmail(data.email);
       })
       .catch((err) => {
+        setResServerError(
+          "Во время запроса произошла ошибка. Возможно, проблема с соединением или введенный E-mail не подходит."
+        );
         console.log(`Ошибка: ${err}`);
       });
   };
@@ -103,7 +109,7 @@ function Profile({ onExit, isLoading, setCurrentUser }) {
               defaultValue={email}
             />
             <span className="profile__input-error profile__input-error_active">
-              {errors?.email && errors?.email?.message}
+              {(errors?.email && errors?.email?.message) || resServerError}
             </span>
           </label>
         </Form>

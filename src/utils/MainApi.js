@@ -9,8 +9,8 @@ function requestResult(res) {
   return Promise.reject(`${res.status}`);
 }
 
-export const getInitialCards = async () => {
-  const res = await fetch(`${BASE_URL}cards`, {
+export const getSaveMovies = async () => {
+  const res = await fetch(`${BASE_URL}movies`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -64,15 +64,16 @@ export const saveMovies = async (data) => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify({
       country: data.country,
       director: data.director,
       duration: data.duration,
       year: data.year,
       description: data.description,
-      image: data.image.url,
+      image: `https://api.nomoreparties.co/${data.image.url}`,
       trailerLink: data.trailerLink,
-      thumbnail: data.previewUrl,
+      thumbnail: `https://api.nomoreparties.co/${data.image.formats.thumbnail.hash}`,
       movieId: data.id,
       nameRU: data.nameRU,
       nameEN: data.nameEN,
@@ -81,8 +82,8 @@ export const saveMovies = async (data) => {
   return requestResult(res);
 };
 
-export const deleteCard = async (cardId) => {
-  const res = await fetch(`${BASE_URL}cards/${cardId}`, {
+export const deleteSaveMovies = async (movieId) => {
+  const res = await fetch(`${BASE_URL}movies/${movieId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

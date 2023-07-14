@@ -1,23 +1,37 @@
 // import { useContext } from "react";
 // import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import plug from "../../images/plug.png";
 
-function MoviesCard({ card, setMovieToSave, onSaveMovies }) {
-  //   const { _id: currentUserId } = useContext(CurrentUserContext);
-  //   const isSaved = card.likes.some((user) => user === currentUserId);
-  const isSaved = false;
+import { useLocation } from "react-router-dom";
+
+function MoviesCard({
+  card,
+  setMovieToSave,
+  onSaveMovies,
+  onCardDelete,
+  savedMovies,
+}) {
   //   const isOwn = card.owner === currentUserId;
+  const location = useLocation();
+
+  const isMoviesRoute = location.pathname === "/movies";
+  // console.log(savedMovies);
+  // console.log(card.id);
+  const isSaved = isMoviesRoute
+    ? Array.isArray(savedMovies)
+      ? savedMovies.some((savedMovie) => savedMovie.movieId === card.id)
+      : savedMovies.movieId === card.id
+    : false;
 
   function handleSaveClick() {
     setMovieToSave(card);
     console.log(card.id);
-    onSaveMovies();
+    onSaveMovies(card);
   }
   // function handleCardClick() {
   //   // onCardClick(card);
   // }
   function handleDeleteClick() {
-    // onCardDelete(card);
+    onCardDelete(card);
   }
 
   return (
@@ -36,22 +50,27 @@ function MoviesCard({ card, setMovieToSave, onSaveMovies }) {
           <img
             className="movies-card__image"
             alt={card.nameRU}
-            src={`https://api.nomoreparties.co/${card.image.url}`}
+            src={`${
+              isMoviesRoute
+                ? `https://api.nomoreparties.co${card.image.url}`
+                : card.image
+            }`}
           />
         </a>
       </div>
       <div className="movies-card__button-container">
-        <button
-          className={`movies-card__button ${
-            isSaved ? "movies-card__button_active" : ""
-          }`}
-          onClick={handleSaveClick}
-          aria-label="Сохранить"
-          type="button"
-        >
-          {isSaved ? "" : "Сохранить"}
-        </button>
-        {false && (
+        {isMoviesRoute ? (
+          <button
+            className={`movies-card__button ${
+              isSaved ? "movies-card__button_active" : ""
+            }`}
+            onClick={handleSaveClick}
+            aria-label="Сохранить"
+            type="button"
+          >
+            {isSaved ? "" : "Сохранить"}
+          </button>
+        ) : (
           <button
             className={`movies-card__button movies-card__button_delete`}
             onClick={handleDeleteClick}

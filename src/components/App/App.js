@@ -9,7 +9,7 @@ import Profile from "../Profile/Profile.js";
 import Login from "../Login/Login.js";
 import Register from "../Register/Register.js";
 import NotFound from "../NotFound/NotFound";
-import { checkToken, getInitialUser, getLogoutUser } from "../../utils/MainApi";
+import { checkToken, getLogoutUser } from "../../utils/MainApi";
 
 function App() {
   const userId = localStorage.getItem("userId");
@@ -18,7 +18,6 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(userId);
     if (userId) {
       checkToken(userId)
         .then((res) => {

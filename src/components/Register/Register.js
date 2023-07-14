@@ -4,7 +4,7 @@ import Form from "../Form/Form.js";
 import { useNavigate } from "react-router-dom";
 import { registration } from "../../utils/MainApi.js";
 
-function Register({ onRegister, isLoading }) {
+function Register({ isLoading }) {
   const [registerError, setRegisterError] = useState("");
   const navigate = useNavigate();
 
@@ -34,7 +34,6 @@ function Register({ onRegister, isLoading }) {
           "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
         );
       });
-    onRegister();
   };
 
   useEffect(() => {
