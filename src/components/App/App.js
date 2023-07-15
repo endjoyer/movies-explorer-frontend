@@ -10,15 +10,18 @@ import Login from "../Login/Login.js";
 import Register from "../Register/Register.js";
 import NotFound from "../NotFound/NotFound";
 import { checkToken, getLogoutUser } from "../../utils/MainApi";
+import Preloader from "../Preloader/Preloader";
 
 function App() {
   const userId = localStorage.getItem("userId");
   const [currentUser, setCurrentUser] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (userId) {
+      setIsLoading(true);
       checkToken(userId)
         .then((res) => {
           if (res) {
@@ -32,16 +35,18 @@ function App() {
           ) {
             navigate("/", { replace: true });
           }
+          setIsLoading(false);
         })
         .catch((err) => {
           console.log(`Ошибка: ${err}`);
           localStorage.removeItem("userId");
+          setIsLoading(false);
         });
     }
   }, [navigate, userId]);
 
   function handleSignOut() {
-    localStorage.removeItem("userId");
+    localStorage.clear();
     getLogoutUser();
     setCurrentUser({});
     navigate("/signin", { replace: true });
@@ -56,13 +61,21 @@ function App() {
             <Route
               path="/movies"
               element={
-                <ProtectedRouteElement element={Movies} userId={userId} />
+                <ProtectedRouteElement
+                  element={Movies}
+                  userId={userId}
+                  setIsLoading={setIsLoading}
+                />
               }
             />
             <Route
               path="/saved-movies"
               element={
-                <ProtectedRouteElement element={SavedMovies} userId={userId} />
+                <ProtectedRouteElement
+                  element={SavedMovies}
+                  userId={userId}
+                  setIsLoading={setIsLoading}
+                />
               }
             />
             <Route
@@ -73,14 +86,22 @@ function App() {
                   setCurrentUser={setCurrentUser}
                   onExit={handleSignOut}
                   userId={userId}
+                  setIsLoading={setIsLoading}
                 />
               }
             />
-            <Route path="/signin" element={<Login />} />
-            <Route path="/signup" element={<Register />} />
+            <Route
+              path="/signin"
+              element={<Login setIsLoading={setIsLoading} />}
+            />
+            <Route
+              path="/signup"
+              element={<Register setIsLoading={setIsLoading} />}
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
+        <Preloader isLoading={isLoading} />
       </div>
     </CurrentUserContext.Provider>
   );

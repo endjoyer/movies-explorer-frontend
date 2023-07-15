@@ -7,31 +7,43 @@ import filterMovies from "../../utils/filterMovies.js";
 import { deleteSaveMovies, getSaveMovies } from "../../utils/MainApi.js";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
-function SavedMovies() {
-  const [isShortFilms, setIsShortFilms] = useState(false);
-  const [searchInput, setSearchInput] = useState("");
+function SavedMovies({ setIsLoading }) {
+  const [isShortFilmsSaveMovies, setIsShortFilmsSaveMovies] = useState(false);
+  const [searchInputSaveMovies, setSearchInputSaveMovies] = useState("");
   const [searchError, setSearchError] = useState("");
   const [visibleCards, setVisibleCards] = useState([]);
   const { _id: userId } = useContext(CurrentUserContext);
-  console.log(userId);
 
   useEffect(() => {
-    const localSaveMovies = localStorage.getItem("filteredSaveMovies");
-    const movies = localSaveMovies ? JSON.parse(localSaveMovies) : [];
+    const localIsShortFilms = localStorage.getItem("isShortFilmsSaveMovies");
+    localIsShortFilms &&
+      setIsShortFilmsSaveMovies(JSON.parse(localIsShortFilms));
+
+    const localSearchInputText = localStorage.getItem(
+      "searchInputTextSaveMovies"
+    );
+    localSearchInputText &&
+      setSearchInputSaveMovies(JSON.parse(localSearchInputText));
+
+    const localFilteredSaveMovies = localStorage.getItem("filteredSaveMovies");
+    const movies = localFilteredSaveMovies
+      ? JSON.parse(localFilteredSaveMovies)
+      : [];
     const userMovies =
       userId && movies.filter((movie) => movie.owner === userId);
     setVisibleCards(userMovies);
   }, [userId]);
 
   const handleSearchMovies = () => {
+    setIsLoading(true);
     getSaveMovies()
       .then((movies) => {
         const userMovies =
           userId && movies.filter((movie) => movie.owner === userId);
         const filteredMovies = filterMovies(
           userMovies,
-          searchInput,
-          isShortFilms
+          searchInputSaveMovies,
+          isShortFilmsSaveMovies
         );
         console.log(movies);
 
@@ -40,12 +52,29 @@ function SavedMovies() {
         } else {
           setSearchError("");
           setVisibleCards(filteredMovies);
+
+          localStorage.setItem(
+            "filteredSaveMovies",
+            JSON.stringify(filteredMovies)
+          );
+          localStorage.setItem(
+            "isShortFilmsSaveMovies",
+            JSON.stringify(isShortFilmsSaveMovies)
+          );
+          localStorage.setItem(
+            "searchInputTextSaveMovies",
+            JSON.stringify(searchInputSaveMovies)
+          );
+
+          localStorage.setItem("saveMovies", JSON.stringify(movies));
         }
+        setIsLoading(false);
       })
       .catch((err) => {
         setSearchError(
           "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
         );
+        setIsLoading(false);
       });
   };
 
@@ -57,6 +86,12 @@ function SavedMovies() {
 
     setVisibleCards(updatedMovies);
     localStorage.setItem("filteredSaveMovies", JSON.stringify(updatedMovies));
+
+    const localSaveMovies = JSON.parse(localStorage.getItem("saveMovies"));
+    const updatedSaveMovies = localSaveMovies.filter(
+      (item) => item._id !== movieToDelete._id
+    );
+    localStorage.setItem("saveMovies", JSON.stringify(updatedSaveMovies));
 
     deleteSaveMovies(movieToDelete._id).catch((err) => {
       console.log(`Ошибка: ${err}`);
@@ -71,10 +106,11 @@ function SavedMovies() {
       <main className="saved-movies">
         <SearchForm
           onSearchMovies={handleSearchMovies}
-          searchInput={searchInput}
-          setSearchInput={setSearchInput}
+          searchInputSaveMovies={searchInputSaveMovies}
+          setSearchInputSaveMovies={setSearchInputSaveMovies}
           searchError={searchError}
-          setIsShortFilms={setIsShortFilms}
+          setIsShortFilmsSaveMovies={setIsShortFilmsSaveMovies}
+          isShortFilmsSaveMovies={isShortFilmsSaveMovies}
         />
         <MoviesCardList
           visibleCards={visibleCards}

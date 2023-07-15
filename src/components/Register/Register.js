@@ -4,7 +4,7 @@ import Form from "../Form/Form.js";
 import { useNavigate } from "react-router-dom";
 import { registration } from "../../utils/MainApi.js";
 
-function Register({ isLoading }) {
+function Register({ setIsLoading }) {
   const [registerError, setRegisterError] = useState("");
   const navigate = useNavigate();
 
@@ -12,13 +12,13 @@ function Register({ isLoading }) {
     register,
     formState: { errors, isValid },
     getValues,
-    reset,
   } = useForm({
     mode: "onChange",
     criteriaMode: "all",
   });
 
   const handleSubmit = (e) => {
+    setIsLoading(true);
     e.preventDefault();
 
     registration(getValues("name"), getValues("email"), getValues("password"))
@@ -28,17 +28,15 @@ function Register({ isLoading }) {
             replace: true,
           });
         }
+        setIsLoading(false);
       })
       .catch((err) => {
         setRegisterError(
           "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
         );
+        setIsLoading(false);
       });
   };
-
-  useEffect(() => {
-    reset();
-  }, []);
 
   useEffect(() => {
     setRegisterError("");
@@ -50,7 +48,6 @@ function Register({ isLoading }) {
         <Form
           name="register"
           title="Добро пожаловать!"
-          isLoading={isLoading}
           onSubmit={handleSubmit}
           btnText="Регистрация"
           isValid={isValid}

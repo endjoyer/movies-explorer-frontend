@@ -2,16 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Logo from "../Logo/Logo";
 
-function Form({
-  name,
-  title,
-  onSubmit,
-  children,
-  isLoading,
-  btnText,
-  isValid,
-  onExit,
-}) {
+function Form({ name, title, onSubmit, children, btnText, isValid, onExit }) {
   function handleExit() {
     onExit();
   }

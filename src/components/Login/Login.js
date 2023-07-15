@@ -4,7 +4,7 @@ import Form from "../Form/Form.js";
 import { authorize } from "../../utils/MainApi.js";
 import { useNavigate } from "react-router-dom";
 
-function Login({ onAuthorization, isLoading }) {
+function Login({ setIsLoading }) {
   const [authorizeError, setAuthorizeError] = useState("");
   const navigate = useNavigate();
 
@@ -19,6 +19,7 @@ function Login({ onAuthorization, isLoading }) {
   });
 
   const handleSubmit = (e) => {
+    setIsLoading(true);
     e.preventDefault();
 
     authorize(getValues("password"), getValues("email"))
@@ -26,11 +27,13 @@ function Login({ onAuthorization, isLoading }) {
         if (user._id) {
           navigate("/", { replace: true });
         }
+        setIsLoading(false);
       })
       .catch((err) => {
         setAuthorizeError(
           "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
         );
+        setIsLoading(false);
       });
   };
 
@@ -43,7 +46,6 @@ function Login({ onAuthorization, isLoading }) {
       <Form
         name="login"
         title="Рады видеть!"
-        isLoading={isLoading}
         onSubmit={handleSubmit}
         btnText="Войти"
         isValid={isValid}

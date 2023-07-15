@@ -5,7 +5,7 @@ import Header from "../Header/Header.js";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { editUserInfo } from "../../utils/MainApi.js";
 
-function Profile({ onExit, isLoading, setCurrentUser }) {
+function Profile({ onExit, setCurrentUser, setIsLoading }) {
   const { name: contextName, email: contextEmail } =
     useContext(CurrentUserContext);
   const [name, setName] = useState(contextName);
@@ -30,6 +30,7 @@ function Profile({ onExit, isLoading, setCurrentUser }) {
   }, [watchAll]);
 
   const handleSubmit = (e) => {
+    setIsLoading(true);
     e.preventDefault();
     const newName = getValues("name") !== "" ? getValues("name") : contextName;
     const newEmail =
@@ -40,12 +41,14 @@ function Profile({ onExit, isLoading, setCurrentUser }) {
         setCurrentUser(data);
         setName(data.name);
         setEmail(data.email);
+        setIsLoading(false);
       })
       .catch((err) => {
         setResServerError(
           "Во время запроса произошла ошибка. Возможно, проблема с соединением или введенный E-mail не подходит."
         );
         console.log(`Ошибка: ${err}`);
+        setIsLoading(false);
       });
   };
 
@@ -61,7 +64,6 @@ function Profile({ onExit, isLoading, setCurrentUser }) {
         <Form
           name="profile"
           title={`Привет, ${name}!`}
-          isLoading={isLoading}
           onSubmit={handleSubmit}
           btnText="Редактировать"
           isValid={isFormValid}

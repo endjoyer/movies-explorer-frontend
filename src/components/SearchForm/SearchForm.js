@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import Checkbox from "./Сheckbox/Сheckbox";
+import { useLocation } from "react-router-dom";
 
 function SearchForm({
   onSearchMovies,
@@ -7,7 +7,15 @@ function SearchForm({
   setSearchInput,
   searchError,
   setIsShortFilms,
+  isShortFilms,
+  searchInputSaveMovies,
+  setSearchInputSaveMovies,
+  setIsShortFilmsSaveMovies,
+  isShortFilmsSaveMovies,
 }) {
+  const location = useLocation();
+  const isMoviesRoute = location.pathname === "/movies";
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onSearchMovies();
@@ -20,8 +28,12 @@ function SearchForm({
           type="text"
           placeholder="Фильм"
           className="search__input"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
+          value={isMoviesRoute ? searchInput : searchInputSaveMovies}
+          onChange={(e) =>
+            isMoviesRoute
+              ? setSearchInput(e.target.value)
+              : setSearchInputSaveMovies(e.target.value)
+          }
         />
         <button onClick={handleSubmit} type="submit" className="search__button">
           Найти
@@ -29,7 +41,12 @@ function SearchForm({
         <span className="search__input-error">{searchError}</span>
       </form>
       <div className="search__checkbox-container">
-        <Checkbox onCheckbox={setIsShortFilms} />
+        <Checkbox
+          onCheckbox={
+            isMoviesRoute ? setIsShortFilms : setIsShortFilmsSaveMovies
+          }
+          isShortFilms={isMoviesRoute ? isShortFilms : isShortFilmsSaveMovies}
+        />
       </div>
     </section>
   );

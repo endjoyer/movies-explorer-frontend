@@ -3,13 +3,7 @@
 
 import { useLocation } from "react-router-dom";
 
-function MoviesCard({
-  card,
-  setMovieToSave,
-  onSaveMovies,
-  onCardDelete,
-  savedMovies,
-}) {
+function MoviesCard({ card, onSaveMovies, onCardDelete, savedMovies }) {
   //   const isOwn = card.owner === currentUserId;
   const location = useLocation();
 
@@ -23,7 +17,6 @@ function MoviesCard({
     : false;
 
   function handleSaveClick() {
-    setMovieToSave(card);
     console.log(card.id);
     onSaveMovies(card);
   }
