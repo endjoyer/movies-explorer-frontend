@@ -59,8 +59,11 @@ function Profile({ onExit, setCurrentUser, setIsLoading }) {
 
   useEffect(() => {
     reset({ name: contextName, email: contextEmail });
-    setResServerError("");
   }, [contextName, contextEmail]);
+
+  useEffect(() => {
+    setResServerError("");
+  }, [isValid]);
 
   return (
     <>
@@ -68,7 +71,7 @@ function Profile({ onExit, setCurrentUser, setIsLoading }) {
       <main className="profile">
         <Form
           name="profile"
-          title={`Привет, ${contextName}!`}
+          title={`Привет, ${contextName ? contextName : ""}!`}
           onSubmit={handleSubmit}
           btnText="Редактировать"
           isValid={isValid && !isSameAsContext}

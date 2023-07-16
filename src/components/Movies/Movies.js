@@ -42,16 +42,18 @@ function Movies({ setIsLoading }) {
   }, []);
 
   useEffect(() => {
-    const localSaveMoviesStr = localStorage.getItem("saveMovies");
-    if (localSaveMoviesStr) {
-      const localSaveMovies = localSaveMoviesStr
-        ? JSON.parse(localSaveMoviesStr)
-        : [];
+    if (userId) {
+      const localSaveMoviesStr = localStorage.getItem("saveMovies");
+      if (localSaveMoviesStr) {
+        const localSaveMovies = localSaveMoviesStr
+          ? JSON.parse(localSaveMoviesStr)
+          : [];
 
-      const userMovies = localSaveMovies.filter(
-        (movie) => movie.owner === userId
-      );
-      setSavedMovies(userMovies);
+        const userMovies = localSaveMovies.filter(
+          (movie) => movie.owner === userId
+        );
+        setSavedMovies(userMovies);
+      }
     }
   }, [userId]);
 

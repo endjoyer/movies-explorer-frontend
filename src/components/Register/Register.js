@@ -52,7 +52,7 @@ function Register({ setIsLoading }) {
 
   useEffect(() => {
     setRegisterError("");
-  }, [register]);
+  }, [isValid]);
 
   return (
     <>

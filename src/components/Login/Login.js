@@ -12,7 +12,6 @@ function Login({ setIsLoading }) {
     register,
     formState: { errors, isValid },
     getValues,
-    reset,
   } = useForm({
     mode: "onChange",
     criteriaMode: "all",
@@ -31,15 +30,17 @@ function Login({ setIsLoading }) {
       })
       .catch((err) => {
         setAuthorizeError(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
+          err === "401"
+            ? "Некорректный E-mail или пароль."
+            : "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
         );
         setIsLoading(false);
       });
   };
 
   useEffect(() => {
-    reset();
-  }, [reset]);
+    setAuthorizeError("");
+  }, [isValid]);
 
   return (
     <main className="login">

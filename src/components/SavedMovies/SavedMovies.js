@@ -18,17 +18,21 @@ function SavedMovies({ setIsLoading }) {
   useEffect(() => {
     setIsLoading(true);
 
-    getSaveMovies()
-      .then((movies) => {
-        userId &&
+    if (userId) {
+      setIsLoading(true);
+      getSaveMovies()
+        .then((movies) => {
           setUserMovies(movies.filter((movie) => movie.owner === userId));
-        localStorage.setItem("saveMovies", JSON.stringify(movies));
-      })
-      .catch((err) => {
-        setSearchError(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
-        );
-      });
+          localStorage.setItem("saveMovies", JSON.stringify(userMovies));
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          setSearchError(
+            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
+          );
+          setIsLoading(false);
+        });
+    }
 
     const localIsShortFilms = localStorage.getItem("isShortFilmsSaveMovies");
     localIsShortFilms &&
@@ -82,17 +86,21 @@ function SavedMovies({ setIsLoading }) {
   };
 
   const handleDeleteMovies = (movieToDelete) => {
-    const updatedMovies = visibleCards.filter(
+    const updatedVisibleMovies = visibleCards.filter(
       (item) => item._id !== movieToDelete._id
     );
 
-    setVisibleCards(updatedMovies);
-    localStorage.setItem("filteredSaveMovies", JSON.stringify(updatedMovies));
+    setVisibleCards(updatedVisibleMovies);
+    localStorage.setItem(
+      "filteredSaveMovies",
+      JSON.stringify(updatedVisibleMovies)
+    );
 
     const localSaveMovies = JSON.parse(localStorage.getItem("saveMovies"));
     const updatedSaveMovies = localSaveMovies.filter(
       (item) => item._id !== movieToDelete._id
     );
+    setUserMovies(updatedSaveMovies);
     localStorage.setItem("saveMovies", JSON.stringify(updatedSaveMovies));
 
     deleteSaveMovies(movieToDelete._id).catch((err) => {
