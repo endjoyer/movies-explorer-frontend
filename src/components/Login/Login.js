@@ -25,7 +25,7 @@ function Login({ setIsLoading }) {
     authorize(getValues("password"), getValues("email"))
       .then((user) => {
         if (user._id) {
-          navigate("/", { replace: true });
+          navigate("/movies", { replace: true });
         }
         setIsLoading(false);
       })

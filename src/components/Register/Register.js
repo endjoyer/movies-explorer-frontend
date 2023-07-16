@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Form from "../Form/Form.js";
 import { useNavigate } from "react-router-dom";
-import { registration } from "../../utils/MainApi.js";
+import { authorize, registration } from "../../utils/MainApi.js";
 
 function Register({ setIsLoading }) {
   const [registerError, setRegisterError] = useState("");
@@ -24,15 +24,27 @@ function Register({ setIsLoading }) {
     registration(getValues("name"), getValues("email"), getValues("password"))
       .then((res) => {
         if (res) {
-          navigate("/signin", {
-            replace: true,
-          });
+          authorize(getValues("password"), getValues("email"))
+            .then((user) => {
+              if (user._id) {
+                navigate("/movies", { replace: true });
+              }
+              setIsLoading(false);
+            })
+            .catch((err) => {
+              console.log(`Ошибка: ${err}`);
+              navigate("/signin", {
+                replace: true,
+              });
+              setIsLoading(false);
+            });
         }
-        setIsLoading(false);
       })
       .catch((err) => {
         setRegisterError(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
+          err === "409"
+            ? "Данный E-mail уже используется."
+            : "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
         );
         setIsLoading(false);
       });
@@ -67,6 +79,11 @@ function Register({ setIsLoading }) {
                 maxLength: {
                   value: 40,
                   message: "Максимум 40 символов.",
+                },
+                pattern: {
+                  value: /^[A-Za-zа-яА-ЯёЁa -]*$/i,
+                  message:
+                    "Имя может содержать только латиницу, кириллицу, пробел или дефис",
                 },
               })}
             />

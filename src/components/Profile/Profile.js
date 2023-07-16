@@ -45,7 +45,9 @@ function Profile({ onExit, setCurrentUser, setIsLoading }) {
       })
       .catch((err) => {
         setResServerError(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или введенный E-mail не подходит."
+          err === "409"
+            ? "Данный E-mail уже используется."
+            : "Во время запроса произошла ошибка. Возможно, проблема с соединением или введенный E-mail не подходит."
         );
         console.log(`Ошибка: ${err}`);
         setIsLoading(false);
@@ -84,6 +86,11 @@ function Profile({ onExit, setCurrentUser, setIsLoading }) {
                   value: 40,
                   message: "Максимум 40 символов.",
                 },
+                pattern: {
+                  value: /^[A-Za-zа-яА-ЯёЁa -]*$/i,
+                  message:
+                    "Имя может содержать только латиницу, кириллицу, пробел или дефис",
+                },
               })}
               defaultValue={name}
             />
@@ -106,6 +113,10 @@ function Profile({ onExit, setCurrentUser, setIsLoading }) {
                 maxLength: {
                   value: 40,
                   message: "Максимум 40 символов.",
+                },
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                  message: "Неверный формат электронной почты",
                 },
               })}
               defaultValue={email}

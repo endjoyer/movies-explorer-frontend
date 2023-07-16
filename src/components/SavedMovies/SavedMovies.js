@@ -12,9 +12,24 @@ function SavedMovies({ setIsLoading }) {
   const [searchInputSaveMovies, setSearchInputSaveMovies] = useState("");
   const [searchError, setSearchError] = useState("");
   const [visibleCards, setVisibleCards] = useState([]);
+  const [userMovies, setUserMovies] = useState([]);
   const { _id: userId } = useContext(CurrentUserContext);
 
   useEffect(() => {
+    setIsLoading(true);
+
+    getSaveMovies()
+      .then((movies) => {
+        userId &&
+          setUserMovies(movies.filter((movie) => movie.owner === userId));
+        localStorage.setItem("saveMovies", JSON.stringify(movies));
+      })
+      .catch((err) => {
+        setSearchError(
+          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
+        );
+      });
+
     const localIsShortFilms = localStorage.getItem("isShortFilmsSaveMovies");
     localIsShortFilms &&
       setIsShortFilmsSaveMovies(JSON.parse(localIsShortFilms));
@@ -32,54 +47,41 @@ function SavedMovies({ setIsLoading }) {
     const userMovies =
       userId && movies.filter((movie) => movie.owner === userId);
     setVisibleCards(userMovies);
+    setIsLoading(false);
   }, [userId]);
 
   const handleSearchMovies = () => {
     setIsLoading(true);
-    getSaveMovies()
-      .then((movies) => {
-        const userMovies =
-          userId && movies.filter((movie) => movie.owner === userId);
-        const filteredMovies = filterMovies(
-          userMovies,
-          searchInputSaveMovies,
-          isShortFilmsSaveMovies
-        );
-        console.log(movies);
 
-        if (filteredMovies.length === 0) {
-          setSearchError("Ничего не найдено.");
-        } else {
-          setSearchError("");
-          setVisibleCards(filteredMovies);
+    const filteredMovies = filterMovies(
+      userMovies,
+      searchInputSaveMovies,
+      isShortFilmsSaveMovies
+    );
 
-          localStorage.setItem(
-            "filteredSaveMovies",
-            JSON.stringify(filteredMovies)
-          );
-          localStorage.setItem(
-            "isShortFilmsSaveMovies",
-            JSON.stringify(isShortFilmsSaveMovies)
-          );
-          localStorage.setItem(
-            "searchInputTextSaveMovies",
-            JSON.stringify(searchInputSaveMovies)
-          );
+    if (filteredMovies.length === 0) {
+      setSearchError("Ничего не найдено.");
+    } else {
+      setSearchError("");
+      setVisibleCards(filteredMovies);
 
-          localStorage.setItem("saveMovies", JSON.stringify(movies));
-        }
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setSearchError(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
-        );
-        setIsLoading(false);
-      });
+      localStorage.setItem(
+        "filteredSaveMovies",
+        JSON.stringify(filteredMovies)
+      );
+      localStorage.setItem(
+        "isShortFilmsSaveMovies",
+        JSON.stringify(isShortFilmsSaveMovies)
+      );
+      localStorage.setItem(
+        "searchInputTextSaveMovies",
+        JSON.stringify(searchInputSaveMovies)
+      );
+    }
+    setIsLoading(false);
   };
 
   const handleDeleteMovies = (movieToDelete) => {
-    console.log(movieToDelete);
     const updatedMovies = visibleCards.filter(
       (item) => item._id !== movieToDelete._id
     );

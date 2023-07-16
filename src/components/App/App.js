@@ -49,7 +49,7 @@ function App() {
     localStorage.clear();
     getLogoutUser();
     setCurrentUser({});
-    navigate("/signin", { replace: true });
+    navigate("/", { replace: true });
   }
 
   return (

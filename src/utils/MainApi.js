@@ -44,20 +44,6 @@ export const editUserInfo = async (name, email) => {
   return requestResult(res);
 };
 
-export const editUserAvatar = async (data) => {
-  const res = await fetch(`${BASE_URL}users/me/avatar`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify({
-      avatar: data.avatar,
-    }),
-  });
-  return requestResult(res);
-};
-
 export const saveMovies = async (data) => {
   const res = await fetch(`${BASE_URL}movies`, {
     method: "POST",
@@ -85,17 +71,6 @@ export const saveMovies = async (data) => {
 export const deleteSaveMovies = async (movieId) => {
   const res = await fetch(`${BASE_URL}movies/${movieId}`, {
     method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-  });
-  return requestResult(res);
-};
-
-export const changeLikeCardStatus = async (cardId, isLiked) => {
-  const res = await fetch(`${BASE_URL}cards/${cardId}/likes`, {
-    method: isLiked ? "DELETE" : "PUT",
     headers: {
       "Content-Type": "application/json",
     },

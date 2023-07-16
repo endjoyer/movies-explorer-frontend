@@ -1,15 +1,10 @@
-// import { useContext } from "react";
-// import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-
 import { useLocation } from "react-router-dom";
 
 function MoviesCard({ card, onSaveMovies, onCardDelete, savedMovies }) {
-  //   const isOwn = card.owner === currentUserId;
   const location = useLocation();
 
   const isMoviesRoute = location.pathname === "/movies";
-  // console.log(savedMovies);
-  // console.log(card.id);
+
   const isSaved = isMoviesRoute
     ? Array.isArray(savedMovies)
       ? savedMovies.some((savedMovie) => savedMovie.movieId === card.id)
@@ -17,12 +12,9 @@ function MoviesCard({ card, onSaveMovies, onCardDelete, savedMovies }) {
     : false;
 
   function handleSaveClick() {
-    console.log(card.id);
     onSaveMovies(card);
   }
-  // function handleCardClick() {
-  //   // onCardClick(card);
-  // }
+
   function handleDeleteClick() {
     onCardDelete(card);
   }

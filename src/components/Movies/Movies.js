@@ -5,7 +5,7 @@ import SearchForm from "../SearchForm/SearchForm.js";
 import MoviesCardList from "../MoviesCardList/MoviesCardList.js";
 import filterMovies from "../../utils/filterMovies.js";
 import { getMovies } from "../../utils/MoviesApi.js";
-import { saveMovies } from "../../utils/MainApi.js";
+import { deleteSaveMovies, saveMovies } from "../../utils/MainApi.js";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
 function Movies({ setIsLoading }) {
@@ -53,37 +53,19 @@ function Movies({ setIsLoading }) {
       );
       setSavedMovies(userMovies);
     }
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
-    setIsLoading(true);
-
     const localIsShortFilms = localStorage.getItem("isShortFilms");
     localIsShortFilms && setIsShortFilms(JSON.parse(localIsShortFilms));
 
     const localSearchInputText = localStorage.getItem("searchInputText");
     localSearchInputText && setSearchInput(JSON.parse(localSearchInputText));
 
-    // const localIsShortFilms = localStorage.getItem("isShortFilms");
-    // if (localIsShortFilms) {
-    //   setIsShortFilms(JSON.parse(localIsShortFilms));
-    // }
-
-    // const localSearchInputText = localStorage.getItem("searchInputText");
-    // if (localSearchInputText) {
-    //   const searchInputText = JSON.parse(localSearchInputText);
-    //   setSearchInput(
-    //     searchInputText !== null && searchInputText !== undefined
-    //       ? searchInputText
-    //       : ""
-    //   );
-    // }
-
     const filteredMovies = localStorage.getItem("filteredMovies");
     const movies = filteredMovies ? JSON.parse(filteredMovies) : [];
 
     setVisibleCards(movies.slice(0, cardsPerPage));
-    setIsLoading(false);
   }, [cardsPerPage]);
 
   const handleSearchMovies = () => {
@@ -96,7 +78,6 @@ function Movies({ setIsLoading }) {
           setSearchError("Ничего не найдено.");
         } else {
           setSearchError("");
-          console.log(filteredMovies);
 
           setVisibleCards(filteredMovies.slice(0, cardsPerPage));
 
@@ -109,7 +90,7 @@ function Movies({ setIsLoading }) {
         }
         setIsLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setSearchError(
           "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
         );
@@ -118,14 +99,22 @@ function Movies({ setIsLoading }) {
   };
 
   const handleSaveMovies = (movie) => {
-    const movieToSave = movie || movieToSave;
-    const filteredMovies = JSON.parse(localStorage.getItem("filteredMovies"));
-
-    if (filteredMovies) {
-      saveMovies(movieToSave)
+    const savedMovie = savedMovies.find((item) => item.movieId === movie.id);
+    if (savedMovie) {
+      deleteSaveMovies(savedMovie._id)
+        .then(() => {
+          const newSavedMovies = savedMovies.filter(
+            (item) => item._id !== savedMovie._id
+          );
+          setSavedMovies(newSavedMovies);
+          localStorage.setItem("saveMovies", JSON.stringify(newSavedMovies));
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
+    } else {
+      saveMovies(movie)
         .then((res) => {
-          console.log(res);
-          console.log(movieToSave);
           const newSavedMovies = [...savedMovies, res];
           setSavedMovies(newSavedMovies);
           localStorage.setItem("saveMovies", JSON.stringify(newSavedMovies));
