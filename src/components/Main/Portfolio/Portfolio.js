@@ -13,7 +13,7 @@ function Portfolio() {
             <p className="portfolio__project-name">
               Одностраничное приложение - Mesto
             </p>
-            <div className="portfolio__icon">↗</div>
+            <span className="portfolio__icon">↗</span>
           </a>
         </li>
         <li className="portfolio__list-item">
@@ -26,7 +26,7 @@ function Portfolio() {
             <p className="portfolio__project-name">
               Приложение в рамках хакатона
             </p>
-            <div className="portfolio__icon">↗</div>
+            <span className="portfolio__icon">↗</span>
           </a>
         </li>
         <li className="portfolio__list-item">
@@ -39,7 +39,7 @@ function Portfolio() {
             <p className="portfolio__project-name">
               Дипломный сайт - Нейросети в искусстве
             </p>
-            <div className="portfolio__icon">↗</div>
+            <span className="portfolio__icon">↗</span>
           </a>
         </li>
         <li className="portfolio__list-item">
@@ -52,7 +52,7 @@ function Portfolio() {
             <p className="portfolio__project-name">
               Статичный сайт - Научиться учиться
             </p>
-            <div className="portfolio__icon">↗</div>
+            <span className="portfolio__icon">↗</span>
           </a>
         </li>
         <li className="portfolio__list-item">
@@ -65,7 +65,7 @@ function Portfolio() {
             <p className="portfolio__project-name">
               Адаптивный сайт - Путешествие по России
             </p>
-            <div className="portfolio__icon">↗</div>
+            <span className="portfolio__icon">↗</span>
           </a>
         </li>
       </ul>

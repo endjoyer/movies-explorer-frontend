@@ -7,27 +7,32 @@ import { editUserInfo } from "../../utils/MainApi.js";
 
 function Profile({ onExit, setCurrentUser, setIsLoading }) {
   const { name: contextName, email: contextEmail } =
-    useContext(CurrentUserContext);
-  const [name, setName] = useState(contextName);
-  const [email, setEmail] = useState(contextEmail);
-  const [isFormValid, setIsFormValid] = useState(false);
-  const [resServerError, setResServerError] = useState("");
+      useContext(CurrentUserContext),
+    [resServerError, setResServerError] = useState("");
 
   const {
     register,
-    formState: { errors },
+    formState: { errors, isValid },
     getValues,
+    reset,
     watch,
   } = useForm({
     mode: "onChange",
     criteriaMode: "all",
   });
 
-  const watchAll = watch();
+  const [isSameAsContext, setIsSameAsContext] = useState(false);
+
+  const name = watch("name");
+  const email = watch("email");
 
   useEffect(() => {
-    setIsFormValid(Object.keys(watchAll).some((key) => watchAll[key] !== ""));
-  }, [watchAll]);
+    if (name === contextName && email === contextEmail) {
+      setIsSameAsContext(true);
+    } else {
+      setIsSameAsContext(false);
+    }
+  }, [name, email, contextName, contextEmail]);
 
   const handleSubmit = (e) => {
     setIsLoading(true);
@@ -39,8 +44,6 @@ function Profile({ onExit, setCurrentUser, setIsLoading }) {
       .then((data) => {
         setResServerError("");
         setCurrentUser(data);
-        setName(data.name);
-        setEmail(data.email);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -55,8 +58,8 @@ function Profile({ onExit, setCurrentUser, setIsLoading }) {
   };
 
   useEffect(() => {
-    setName(contextName);
-    setEmail(contextEmail);
+    reset({ name: contextName, email: contextEmail });
+    setResServerError("");
   }, [contextName, contextEmail]);
 
   return (
@@ -65,10 +68,10 @@ function Profile({ onExit, setCurrentUser, setIsLoading }) {
       <main className="profile">
         <Form
           name="profile"
-          title={`Привет, ${name}!`}
+          title={`Привет, ${contextName}!`}
           onSubmit={handleSubmit}
           btnText="Редактировать"
-          isValid={isFormValid}
+          isValid={isValid && !isSameAsContext}
           onExit={onExit}
         >
           <label className="profile__label">
@@ -92,7 +95,6 @@ function Profile({ onExit, setCurrentUser, setIsLoading }) {
                     "Имя может содержать только латиницу, кириллицу, пробел или дефис",
                 },
               })}
-              defaultValue={name}
             />
             <span className="profile__input-error profile__input-error_active">
               {errors?.name?.message}
@@ -119,7 +121,6 @@ function Profile({ onExit, setCurrentUser, setIsLoading }) {
                   message: "Неверный формат электронной почты",
                 },
               })}
-              defaultValue={email}
             />
             <span className="profile__input-error profile__input-error_active">
               {(errors?.email && errors?.email?.message) || resServerError}

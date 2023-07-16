@@ -9,13 +9,13 @@ import { deleteSaveMovies, saveMovies } from "../../utils/MainApi.js";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
 function Movies({ setIsLoading }) {
-  const [isShortFilms, setIsShortFilms] = useState(false);
-  const [searchInput, setSearchInput] = useState("");
-  const [searchError, setSearchError] = useState("");
-  const [visibleCards, setVisibleCards] = useState([]);
-  const [cardsPerPage, setCardsPerPage] = useState(0);
-  const [savedMovies, setSavedMovies] = useState([]);
-  const { _id: userId } = useContext(CurrentUserContext);
+  const [isShortFilms, setIsShortFilms] = useState(false),
+    [searchInput, setSearchInput] = useState(""),
+    [searchError, setSearchError] = useState(""),
+    [visibleCards, setVisibleCards] = useState([]),
+    [cardsPerPage, setCardsPerPage] = useState(0),
+    [savedMovies, setSavedMovies] = useState([]),
+    { _id: userId } = useContext(CurrentUserContext);
 
   useEffect(() => {
     const handleResize = () => {

@@ -5,12 +5,12 @@ import HamburgerMenu from "./HamburgerMenu/HamburgerMenu";
 import Logo from "../Logo/Logo";
 
 function Header() {
-  const { _id: userId } = useContext(CurrentUserContext);
-  const { pathname } = useLocation();
-  const isMainPage = pathname === "/";
-  const isMoviesPage = pathname === "/movies";
-  const isSavedMoviesPage = pathname === "/saved-movies";
-  const isProfilePage = pathname === "/profile";
+  const { _id: userId } = useContext(CurrentUserContext),
+    { pathname } = useLocation(),
+    isMainPage = pathname === "/",
+    isMoviesPage = pathname === "/movies",
+    isSavedMoviesPage = pathname === "/saved-movies",
+    isProfilePage = pathname === "/profile";
 
   return (
     <header className="header">

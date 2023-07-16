@@ -8,12 +8,12 @@ import { deleteSaveMovies, getSaveMovies } from "../../utils/MainApi.js";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
 function SavedMovies({ setIsLoading }) {
-  const [isShortFilmsSaveMovies, setIsShortFilmsSaveMovies] = useState(false);
-  const [searchInputSaveMovies, setSearchInputSaveMovies] = useState("");
-  const [searchError, setSearchError] = useState("");
-  const [visibleCards, setVisibleCards] = useState([]);
-  const [userMovies, setUserMovies] = useState([]);
-  const { _id: userId } = useContext(CurrentUserContext);
+  const [isShortFilmsSaveMovies, setIsShortFilmsSaveMovies] = useState(false),
+    [searchInputSaveMovies, setSearchInputSaveMovies] = useState(""),
+    [searchError, setSearchError] = useState(""),
+    [visibleCards, setVisibleCards] = useState([]),
+    [userMovies, setUserMovies] = useState([]),
+    { _id: userId } = useContext(CurrentUserContext);
 
   useEffect(() => {
     setIsLoading(true);
