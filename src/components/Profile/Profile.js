@@ -4,11 +4,13 @@ import Form from "../Form/Form.js";
 import Header from "../Header/Header.js";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { editUserInfo } from "../../utils/MainApi.js";
+import Popup from "../Popup/Popup.js";
 
 function Profile({ onExit, setCurrentUser, setIsLoading }) {
   const { name: contextName, email: contextEmail } =
       useContext(CurrentUserContext),
-    [resServerError, setResServerError] = useState("");
+    [resServerError, setResServerError] = useState(""),
+    [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const {
     register,
@@ -45,6 +47,7 @@ function Profile({ onExit, setCurrentUser, setIsLoading }) {
         setResServerError("");
         setCurrentUser(data);
         setIsLoading(false);
+        setIsPopupOpen(true);
       })
       .catch((err) => {
         setResServerError(
@@ -56,6 +59,15 @@ function Profile({ onExit, setCurrentUser, setIsLoading }) {
         setIsLoading(false);
       });
   };
+  useEffect(() => {
+    if (isPopupOpen) {
+      const timer = setTimeout(() => {
+        setIsPopupOpen(false);
+      }, 2500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isPopupOpen]);
 
   useEffect(() => {
     reset({ name: contextName, email: contextEmail });
@@ -131,6 +143,7 @@ function Profile({ onExit, setCurrentUser, setIsLoading }) {
           </label>
         </Form>
       </main>
+      {isPopupOpen && <Popup text="Данные успешно изменены!" />}
     </>
   );
 }

@@ -65,10 +65,20 @@ function Movies({ setIsLoading }) {
     localSearchInputText && setSearchInput(JSON.parse(localSearchInputText));
 
     const filteredMovies = localStorage.getItem("filteredMovies");
-    const movies = filteredMovies ? JSON.parse(filteredMovies) : [];
+    const parsesMovies = filteredMovies ? JSON.parse(filteredMovies) : [];
+    console.log(parsesMovies);
+    const movies = isShortFilms
+      ? parsesMovies
+      : parsesMovies.filter((movie) => movie.duration > 40);
 
     setVisibleCards(movies.slice(0, cardsPerPage));
-  }, [cardsPerPage]);
+  }, [cardsPerPage, isShortFilms]);
+
+  const handleToggleShortFilms = () => {
+    const newIsShortFilms = !isShortFilms;
+    setIsShortFilms(newIsShortFilms);
+    localStorage.setItem("isShortFilms", JSON.stringify(newIsShortFilms));
+  };
 
   const handleSearchMovies = () => {
     setIsLoading(true);
@@ -146,7 +156,7 @@ function Movies({ setIsLoading }) {
           searchInput={searchInput}
           setSearchInput={setSearchInput}
           searchError={searchError}
-          setIsShortFilms={setIsShortFilms}
+          setIsShortFilms={handleToggleShortFilms}
           isShortFilms={isShortFilms}
         />
         <MoviesCardList
