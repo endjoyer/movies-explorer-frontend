@@ -30,6 +30,8 @@
 
 ---
 
+[Ссылка на пул реквест level-3 - https://github.com/endjoyer/movies-explorer-frontend/pull/2](https://github.com/endjoyer/movies-explorer-frontend/pull/2)
+
 [Публичный сервер (Api) - https://endjoys.diploma.nomoreparties.sbs](https://endjoys.diploma.nomoreparties.sbs)\
 [Открыть сайт в браузере](https://movies.explorer.diploma.nomoreparties.sbs)\
 [Ссылка на макет в Google диске](https://drive.google.com/file/d/1XDR-cCA8tEw4Y3M_dWByRuo8eYb4g-Wc/view?usp=drive_link)\
