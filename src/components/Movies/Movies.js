@@ -66,7 +66,6 @@ function Movies({ setIsLoading }) {
 
     const filteredMovies = localStorage.getItem("filteredMovies");
     const parsesMovies = filteredMovies ? JSON.parse(filteredMovies) : [];
-    console.log(parsesMovies);
     const movies = isShortFilms
       ? parsesMovies
       : parsesMovies.filter((movie) => movie.duration > 40);
