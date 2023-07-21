@@ -81,32 +81,59 @@ function Movies({ setIsLoading }) {
 
   const handleSearchMovies = () => {
     setIsLoading(true);
-    getMovies()
-      .then((movies) => {
-        const filteredMovies = filterMovies(movies, searchInput, isShortFilms);
+    const localAllMovies = localStorage.getItem("allMovies");
+    const allMovies = localAllMovies ? JSON.parse(localAllMovies) : [];
+    if (allMovies.length > 0) {
+      const filteredMovies = filterMovies(allMovies, searchInput, isShortFilms);
 
-        if (filteredMovies.length === 0) {
-          setSearchError("Ничего не найдено.");
-        } else {
-          setSearchError("");
+      if (filteredMovies.length === 0) {
+        setSearchError("Ничего не найдено.");
+      } else {
+        setSearchError("");
 
-          setVisibleCards(filteredMovies.slice(0, cardsPerPage));
+        setVisibleCards(filteredMovies.slice(0, cardsPerPage));
 
-          localStorage.setItem(
-            "filteredMovies",
-            JSON.stringify(filteredMovies)
+        localStorage.setItem("filteredMovies", JSON.stringify(filteredMovies));
+        localStorage.setItem("isShortFilms", JSON.stringify(isShortFilms));
+        localStorage.setItem("searchInputText", JSON.stringify(searchInput));
+      }
+      setIsLoading(false);
+    } else {
+      getMovies()
+        .then((movies) => {
+          const filteredMovies = filterMovies(
+            movies,
+            searchInput,
+            isShortFilms
           );
-          localStorage.setItem("isShortFilms", JSON.stringify(isShortFilms));
-          localStorage.setItem("searchInputText", JSON.stringify(searchInput));
-        }
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setSearchError(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
-        );
-        setIsLoading(false);
-      });
+
+          if (filteredMovies.length === 0) {
+            setSearchError("Ничего не найдено.");
+          } else {
+            setSearchError("");
+
+            setVisibleCards(filteredMovies.slice(0, cardsPerPage));
+
+            localStorage.setItem("allMovies", JSON.stringify(movies));
+            localStorage.setItem(
+              "filteredMovies",
+              JSON.stringify(filteredMovies)
+            );
+            localStorage.setItem("isShortFilms", JSON.stringify(isShortFilms));
+            localStorage.setItem(
+              "searchInputText",
+              JSON.stringify(searchInput)
+            );
+          }
+          setIsLoading(false);
+        })
+        .catch(() => {
+          setSearchError(
+            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
+          );
+          setIsLoading(false);
+        });
+    }
   };
 
   const handleSaveMovies = (movie) => {

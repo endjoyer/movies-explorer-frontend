@@ -23,9 +23,9 @@ function App() {
     if (userId) {
       setIsLoading(true);
       checkToken(userId)
-        .then((res) => {
-          if (res) {
-            setCurrentUser(res);
+        .then((apiCurrentUser) => {
+          if (apiCurrentUser) {
+            setCurrentUser(apiCurrentUser);
           }
         })
         .then(() => {
@@ -43,12 +43,13 @@ function App() {
           setIsLoading(false);
         });
     }
-  }, [navigate, userId]);
+  }, [userId]);
 
   function handleSignOut() {
     localStorage.clear();
     getLogoutUser();
     setCurrentUser({});
+
     navigate("/", { replace: true });
   }
 

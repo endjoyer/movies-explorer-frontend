@@ -24,10 +24,14 @@ function SavedMovies({ setIsLoading }) {
       const localSaveMovies = localStorage.getItem("saveMovies");
 
       const saveMovies = localSaveMovies ? JSON.parse(localSaveMovies) : [];
-      console.log(saveMovies.length);
+      console.log(saveMovies);
       if (saveMovies.length > 0) {
         setUserMovies(saveMovies);
-        setVisibleCards(saveMovies);
+        setVisibleCards(
+          isShortFilmsSaveMovies
+            ? saveMovies
+            : saveMovies.filter((movie) => movie.duration > 40)
+        );
         setIsLoading(false);
       } else {
         getSaveMovies()
@@ -36,7 +40,11 @@ function SavedMovies({ setIsLoading }) {
               (movie) => movie.owner === userId
             );
             setUserMovies(userMovies);
-            setVisibleCards(JSON.parse(apiSaveMovies));
+            setVisibleCards(
+              isShortFilmsSaveMovies
+                ? apiSaveMovies
+                : apiSaveMovies.filter((movie) => movie.duration > 40)
+            );
             localStorage.setItem("saveMovies", JSON.stringify(apiSaveMovies));
             setIsLoading(false);
           })
@@ -48,9 +56,9 @@ function SavedMovies({ setIsLoading }) {
           });
       }
     }
-    // const localIsShortFilms = localStorage.getItem("isShortFilmsSaveMovies");
-    // localIsShortFilms &&
-    //   setIsShortFilmsSaveMovies(JSON.parse(localIsShortFilms));
+    const localIsShortFilms = localStorage.getItem("isShortFilmsSaveMovies");
+    localIsShortFilms &&
+      setIsShortFilmsSaveMovies(JSON.parse(localIsShortFilms));
 
     // const localSearchInputText = localStorage.getItem(
     //   "searchInputTextSaveMovies"
@@ -66,7 +74,16 @@ function SavedMovies({ setIsLoading }) {
     //   userId && movies.filter((movie) => movie.owner === userId);
     // setVisibleCards(userMovies);
     // setIsLoading(false);
-  }, [userId]);
+  }, [userId, isShortFilmsSaveMovies]);
+
+  const handleToggleShortFilmsSaveMovies = () => {
+    const newIsShortFilms = !isShortFilmsSaveMovies;
+    setIsShortFilmsSaveMovies(newIsShortFilms);
+    localStorage.setItem(
+      "isShortFilmsSaveMovies",
+      JSON.stringify(newIsShortFilms)
+    );
+  };
 
   const handleSearchMovies = () => {
     setIsLoading(true);
@@ -135,7 +152,7 @@ function SavedMovies({ setIsLoading }) {
           searchInputSaveMovies={searchInputSaveMovies}
           setSearchInputSaveMovies={setSearchInputSaveMovies}
           searchError={searchError}
-          setIsShortFilmsSaveMovies={setIsShortFilmsSaveMovies}
+          setIsShortFilmsSaveMovies={handleToggleShortFilmsSaveMovies}
           isShortFilmsSaveMovies={isShortFilmsSaveMovies}
         />
         <MoviesCardList
