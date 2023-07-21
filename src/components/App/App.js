@@ -22,26 +22,40 @@ function App() {
   useEffect(() => {
     if (userId) {
       setIsLoading(true);
-      checkToken(userId)
-        .then((apiCurrentUser) => {
-          if (apiCurrentUser) {
-            setCurrentUser(apiCurrentUser);
-          }
-        })
-        .then(() => {
-          if (
-            window.location.pathname === "/signin" ||
-            window.location.pathname === "/signup"
-          ) {
-            navigate("/", { replace: true });
-          }
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          console.log(`Ошибка: ${err}`);
-          localStorage.removeItem("userId");
-          setIsLoading(false);
-        });
+      const localCurrentUser = localStorage.getItem("currentUser");
+      const parseCurrentUser = localCurrentUser
+        ? JSON.parse(localCurrentUser)
+        : null;
+      console.log(parseCurrentUser);
+      if (parseCurrentUser) {
+        setCurrentUser(parseCurrentUser);
+        setIsLoading(false);
+      } else {
+        checkToken(userId)
+          .then((apiCurrentUser) => {
+            if (apiCurrentUser) {
+              setCurrentUser(apiCurrentUser);
+              localStorage.setItem(
+                "currentUser",
+                JSON.stringify(apiCurrentUser)
+              );
+            }
+          })
+          .then(() => {
+            if (
+              window.location.pathname === "/signin" ||
+              window.location.pathname === "/signup"
+            ) {
+              navigate("/", { replace: true });
+            }
+            setIsLoading(false);
+          })
+          .catch((err) => {
+            console.log(`Ошибка: ${err}`);
+            localStorage.removeItem("userId");
+            setIsLoading(false);
+          });
+      }
     }
   }, [userId]);
 
