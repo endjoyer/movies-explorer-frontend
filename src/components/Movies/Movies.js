@@ -138,6 +138,7 @@ function Movies({ setIsLoading }) {
 
   const handleSaveMovies = (movie) => {
     const savedMovie = savedMovies.find((item) => item.movieId === movie.id);
+    setSearchError("");
     if (savedMovie) {
       deleteSaveMovies(savedMovie._id)
         .then(() => {
@@ -148,6 +149,8 @@ function Movies({ setIsLoading }) {
           localStorage.setItem("saveMovies", JSON.stringify(newSavedMovies));
         })
         .catch((err) => {
+          err === "401" &&
+            setSearchError("Пожалуйста, повторно авторизуйтесь.");
           console.log(`Ошибка: ${err}`);
         });
     } else {
@@ -158,6 +161,8 @@ function Movies({ setIsLoading }) {
           localStorage.setItem("saveMovies", JSON.stringify(newSavedMovies));
         })
         .catch((err) => {
+          err === "401" &&
+            setSearchError("Пожалуйста, повторно авторизуйтесь.");
           console.log(`Ошибка: ${err}`);
         });
     }
