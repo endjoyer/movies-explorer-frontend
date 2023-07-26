@@ -59,21 +59,6 @@ function SavedMovies({ setIsLoading }) {
     const localIsShortFilms = localStorage.getItem("isShortFilmsSaveMovies");
     localIsShortFilms &&
       setIsShortFilmsSaveMovies(JSON.parse(localIsShortFilms));
-
-    // const localSearchInputText = localStorage.getItem(
-    //   "searchInputTextSaveMovies"
-    // );
-    // localSearchInputText &&
-    //   setSearchInputSaveMovies(JSON.parse(localSearchInputText));
-
-    // const localFilteredSaveMovies = localStorage.getItem("filteredSaveMovies");
-    // const movies = localFilteredSaveMovies
-    //   ? JSON.parse(localFilteredSaveMovies)
-    //   : [];
-    // const userMovies =
-    //   userId && movies.filter((movie) => movie.owner === userId);
-    // setVisibleCards(userMovies);
-    // setIsLoading(false);
   }, [userId, isShortFilmsSaveMovies]);
 
   const handleToggleShortFilmsSaveMovies = () => {
@@ -99,19 +84,6 @@ function SavedMovies({ setIsLoading }) {
     } else {
       setSearchError("");
       setVisibleCards(filteredMovies);
-
-      // localStorage.setItem(
-      //   "filteredSaveMovies",
-      //   JSON.stringify(filteredMovies)
-      // );
-      // localStorage.setItem(
-      //   "isShortFilmsSaveMovies",
-      //   JSON.stringify(isShortFilmsSaveMovies)
-      // );
-      // localStorage.setItem(
-      //   "searchInputTextSaveMovies",
-      //   JSON.stringify(searchInputSaveMovies)
-      // );
     }
     setIsLoading(false);
   };
@@ -122,16 +94,11 @@ function SavedMovies({ setIsLoading }) {
     );
     setVisibleCards(updatedVisibleMovies);
 
-    // localStorage.setItem(
-    //   "filteredSaveMovies",
-    //   JSON.stringify(updatedVisibleMovies)
-    // );
-
     const localSaveMovies = JSON.parse(localStorage.getItem("saveMovies"));
     const updatedSaveMovies = localSaveMovies.filter(
       (item) => item._id !== movieToDelete._id
     );
-
+    setSearchError("");
     setUserMovies(updatedSaveMovies);
 
     localStorage.setItem("saveMovies", JSON.stringify(updatedSaveMovies));
@@ -139,6 +106,7 @@ function SavedMovies({ setIsLoading }) {
     deleteSaveMovies(movieToDelete._id).catch((err) => {
       console.log(`Ошибка: ${err}`);
       setVisibleCards(visibleCards);
+      err === "401" && setSearchError("Пожалуйста, повторно авторизуйтесь.");
       localStorage.setItem("saveMovies", JSON.stringify(localSaveMovies));
     });
   };

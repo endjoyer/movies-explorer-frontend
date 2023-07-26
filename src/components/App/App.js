@@ -26,7 +26,6 @@ function App() {
       const parseCurrentUser = localCurrentUser
         ? JSON.parse(localCurrentUser)
         : null;
-      console.log(parseCurrentUser);
       if (parseCurrentUser) {
         setCurrentUser(parseCurrentUser);
         setIsLoading(false);
