@@ -24,7 +24,6 @@ function SavedMovies({ setIsLoading }) {
       const localSaveMovies = localStorage.getItem("saveMovies");
 
       const saveMovies = localSaveMovies ? JSON.parse(localSaveMovies) : [];
-      console.log(saveMovies);
       if (saveMovies.length > 0) {
         setUserMovies(saveMovies);
         setVisibleCards(
@@ -92,23 +91,26 @@ function SavedMovies({ setIsLoading }) {
     const updatedVisibleMovies = visibleCards.filter(
       (item) => item._id !== movieToDelete._id
     );
-    setVisibleCards(updatedVisibleMovies);
 
     const localSaveMovies = JSON.parse(localStorage.getItem("saveMovies"));
     const updatedSaveMovies = localSaveMovies.filter(
       (item) => item._id !== movieToDelete._id
     );
     setSearchError("");
-    setUserMovies(updatedSaveMovies);
 
     localStorage.setItem("saveMovies", JSON.stringify(updatedSaveMovies));
 
-    deleteSaveMovies(movieToDelete._id).catch((err) => {
-      console.log(`Ошибка: ${err}`);
-      setVisibleCards(visibleCards);
-      err === "401" && setSearchError("Пожалуйста, повторно авторизуйтесь.");
-      localStorage.setItem("saveMovies", JSON.stringify(localSaveMovies));
-    });
+    deleteSaveMovies(movieToDelete._id)
+      .then(
+        () => setVisibleCards(updatedVisibleMovies),
+        setUserMovies(updatedSaveMovies)
+      )
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+        setVisibleCards(visibleCards);
+        err === "401" && setSearchError("Пожалуйста, повторно авторизуйтесь.");
+        localStorage.setItem("saveMovies", JSON.stringify(localSaveMovies));
+      });
   };
 
   return (

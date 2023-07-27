@@ -84,7 +84,7 @@ function Movies({ setIsLoading }) {
     const localAllMovies = localStorage.getItem("allMovies");
     const allMovies = localAllMovies ? JSON.parse(localAllMovies) : [];
     if (allMovies.length > 0) {
-      const filteredMovies = filterMovies(allMovies, searchInput, isShortFilms);
+      const filteredMovies = filterMovies(allMovies, searchInput, true);
 
       if (filteredMovies.length === 0) {
         setSearchError("Ничего не найдено.");
@@ -101,11 +101,7 @@ function Movies({ setIsLoading }) {
     } else {
       getMovies()
         .then((movies) => {
-          const filteredMovies = filterMovies(
-            movies,
-            searchInput,
-            isShortFilms
-          );
+          const filteredMovies = filterMovies(movies, searchInput, true);
 
           if (filteredMovies.length === 0) {
             setSearchError("Ничего не найдено.");
@@ -170,7 +166,10 @@ function Movies({ setIsLoading }) {
 
   const handleLoadMore = () => {
     const filteredMovies = localStorage.getItem("filteredMovies");
-    const movies = filteredMovies ? JSON.parse(filteredMovies) : [];
+    const parsesMovies = filteredMovies ? JSON.parse(filteredMovies) : [];
+    const movies = isShortFilms
+      ? parsesMovies
+      : parsesMovies.filter((movie) => movie.duration > 40);
     const nextVisibleCards = movies.slice(
       0,
       visibleCards.length + cardsPerPage
