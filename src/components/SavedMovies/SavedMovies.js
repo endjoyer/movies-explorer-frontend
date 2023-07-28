@@ -17,6 +17,7 @@ function SavedMovies({ setIsLoading }) {
 
   useEffect(() => {
     setIsLoading(true);
+    setSearchError("");
 
     if (userId) {
       setIsLoading(true);
@@ -28,8 +29,8 @@ function SavedMovies({ setIsLoading }) {
         setUserMovies(saveMovies);
         setVisibleCards(
           isShortFilmsSaveMovies
-            ? saveMovies
-            : saveMovies.filter((movie) => movie.duration > 40)
+            ? saveMovies.filter((movie) => movie.duration <= 40)
+            : saveMovies
         );
         setIsLoading(false);
       } else {
@@ -41,8 +42,8 @@ function SavedMovies({ setIsLoading }) {
             setUserMovies(userMovies);
             setVisibleCards(
               isShortFilmsSaveMovies
-                ? apiSaveMovies
-                : apiSaveMovies.filter((movie) => movie.duration > 40)
+                ? apiSaveMovies.filter((movie) => movie.duration <= 40)
+                : apiSaveMovies
             );
             localStorage.setItem("saveMovies", JSON.stringify(apiSaveMovies));
             setIsLoading(false);
@@ -72,17 +73,17 @@ function SavedMovies({ setIsLoading }) {
   const handleSearchMovies = () => {
     setIsLoading(true);
 
-    const filteredMovies = filterMovies(
-      userMovies,
-      searchInputSaveMovies,
-      isShortFilmsSaveMovies
-    );
+    const filteredMovies = filterMovies(userMovies, searchInputSaveMovies);
+    const isShortFilmsMovies = isShortFilmsSaveMovies
+      ? filteredMovies.filter((movie) => movie.duration <= 40)
+      : filteredMovies;
 
-    if (filteredMovies.length === 0) {
+    if (isShortFilmsMovies.length === 0) {
       setSearchError("Ничего не найдено.");
+      setVisibleCards([]);
     } else {
       setSearchError("");
-      setVisibleCards(filteredMovies);
+      setVisibleCards(isShortFilmsMovies);
     }
     setIsLoading(false);
   };

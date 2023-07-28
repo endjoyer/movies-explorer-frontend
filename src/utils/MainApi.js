@@ -1,5 +1,5 @@
-export const BASE_URL = "https://endjoys.diploma.nomoreparties.sbs/";
-// export const BASE_URL = "http://localhost:3000/";
+// export const BASE_URL = "https://endjoys.diploma.nomoreparties.sbs/";
+export const BASE_URL = "http://localhost:3000/";
 
 function requestResult(res) {
   if (res.ok) {
