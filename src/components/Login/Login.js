@@ -1,34 +1,52 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Form from "../Form/Form.js";
+import { authorize } from "../../utils/MainApi.js";
+import { useNavigate } from "react-router-dom";
 
-function Login({ onAuthorization, isLoading }) {
+function Login({ setIsLoading }) {
+  const [authorizeError, setAuthorizeError] = useState("");
+  const navigate = useNavigate();
+
   const {
     register,
     formState: { errors, isValid },
     getValues,
-    reset,
   } = useForm({
     mode: "onChange",
     criteriaMode: "all",
   });
 
   const handleSubmit = (e) => {
+    setIsLoading(true);
     e.preventDefault();
 
-    onAuthorization(getValues("password"), getValues("email"));
+    authorize(getValues("password"), getValues("email"))
+      .then((user) => {
+        if (user._id) {
+          navigate("/movies", { replace: true });
+        }
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setAuthorizeError(
+          err === "401"
+            ? "Некорректный E-mail или пароль."
+            : "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
+        );
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
-    reset();
-  }, [reset]);
+    setAuthorizeError("");
+  }, [isValid]);
 
   return (
     <main className="login">
       <Form
         name="login"
         title="Рады видеть!"
-        isLoading={isLoading}
         onSubmit={handleSubmit}
         btnText="Войти"
         isValid={isValid}
@@ -74,7 +92,7 @@ function Login({ onAuthorization, isLoading }) {
             })}
           />
           <span className="login__input-error login__input-error_active">
-            {errors?.password && errors?.password?.message}
+            {(errors?.password && errors?.password?.message) || authorizeError}
           </span>
         </label>
       </Form>

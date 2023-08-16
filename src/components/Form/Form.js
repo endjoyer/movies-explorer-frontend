@@ -2,15 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Logo from "../Logo/Logo";
 
-function Form({
-  name,
-  title,
-  onSubmit,
-  children,
-  isLoading,
-  btnText,
-  isValid,
-}) {
+function Form({ name, title, onSubmit, children, btnText, isValid, onExit }) {
+  function handleExit() {
+    onExit();
+  }
+
   return (
     <>
       <form
@@ -37,7 +33,7 @@ function Form({
             {btnText}
           </button>
           {name === "profile" ? (
-            <button type="button" className="form__exit">
+            <button type="button" onClick={handleExit} className="form__exit">
               Выйти из аккаунта
             </button>
           ) : (

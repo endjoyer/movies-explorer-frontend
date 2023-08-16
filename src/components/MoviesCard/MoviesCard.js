@@ -1,19 +1,20 @@
-// import { useContext } from "react";
-// import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import plug from "../../images/plug.png";
+import { useLocation } from "react-router-dom";
 
-function MoviesCard({ card, onCardSave, onCardClick, onCardDelete }) {
-  //   const { _id: currentUserId } = useContext(CurrentUserContext);
-  //   const isSaved = card.likes.some((user) => user === currentUserId);
-  const isSaved = false;
-  //   const isOwn = card.owner === currentUserId;
+function MoviesCard({ card, onSaveMovies, onCardDelete, savedMovies }) {
+  const location = useLocation();
+
+  const isMoviesRoute = location.pathname === "/movies";
+
+  const isSaved = isMoviesRoute
+    ? Array.isArray(savedMovies)
+      ? savedMovies.some((savedMovie) => savedMovie.movieId === card.id)
+      : savedMovies.movieId === card.id
+    : false;
 
   function handleSaveClick() {
-    onCardSave(card);
+    onSaveMovies(card);
   }
-  function handleCardClick() {
-    onCardClick(card);
-  }
+
   function handleDeleteClick() {
     onCardDelete(card);
   }
@@ -21,24 +22,40 @@ function MoviesCard({ card, onCardSave, onCardClick, onCardDelete }) {
   return (
     <li className="movies-card">
       <div className="movies-card__text">
-        <h2 className="movies-card__name">Здесь будет название</h2>
-        <p className="movies-card__time">n минут</p>
+        <p className="movies-card__name">{card.nameRU}</p>
+        <span className="movies-card__time">{card.duration} минут</span>
       </div>
-      <div className="movies-card__image-container " onClick={handleCardClick}>
-        <img className="movies-card__image" alt="Заглушка" src={plug} />
+      <div className="movies-card__image-container">
+        <a
+          href={card.trailerLink}
+          target="_blank"
+          rel="noreferrer"
+          className="movies-card__link"
+        >
+          <img
+            className="movies-card__image"
+            alt={card.nameRU}
+            src={`${
+              isMoviesRoute
+                ? `https://api.nomoreparties.co${card.image.url}`
+                : card.image
+            }`}
+          />
+        </a>
       </div>
       <div className="movies-card__button-container">
-        <button
-          className={`movies-card__button ${
-            isSaved ? "movies-card__button_active" : ""
-          }`}
-          onClick={handleSaveClick}
-          aria-label="Сохранить"
-          type="button"
-        >
-          {isSaved ? "" : "Сохранить"}
-        </button>
-        {false && (
+        {isMoviesRoute ? (
+          <button
+            className={`movies-card__button ${
+              isSaved ? "movies-card__button_active" : ""
+            }`}
+            onClick={handleSaveClick}
+            aria-label="Сохранить"
+            type="button"
+          >
+            {isSaved ? "" : "Сохранить"}
+          </button>
+        ) : (
           <button
             className={`movies-card__button movies-card__button_delete`}
             onClick={handleDeleteClick}

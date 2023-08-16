@@ -36,10 +36,11 @@
 
 .hamburger-menu__btn {
   position: absolute;
-  top: 36px;
+  top: 25px;
   right: 0;
   width: 26px;
-  height: 26px;
+  height: 15px;
+  padding: 11px 0 0;
   cursor: pointer;
   z-index: 2;
   transition-duration: 0.3s;

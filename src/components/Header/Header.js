@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import HamburgerMenu from "./HamburgerMenu/HamburgerMenu";
 import Logo from "../Logo/Logo";
 
 function Header() {
-  const { pathname } = useLocation();
-  const isMainPage = pathname === "/";
-  const isMoviesPage = pathname === "/movies";
-  const isSavedMoviesPage = pathname === "/saved-movies";
-  const isProfilePage = pathname === "/profile";
+  const { _id: userId } = useContext(CurrentUserContext),
+    { pathname } = useLocation(),
+    isMainPage = pathname === "/",
+    isMoviesPage = pathname === "/movies",
+    isSavedMoviesPage = pathname === "/saved-movies",
+    isProfilePage = pathname === "/profile";
+
   return (
     <header className="header">
       <Logo />
-      {isMainPage ? (
+      {!userId ? (
         <nav>
           <Link to="/signup" className="header__link">
             Регистрация
