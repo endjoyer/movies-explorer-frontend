@@ -71,7 +71,7 @@ cd <Имя-папки>
 - Склонируйте этот репозиторий:
 
 ```
-git clone https://github.com/famovkin/movies-explorer-frontend.git
+git clone https://github.com/endjoyer/movies-explorer-frontend
 ```
 
 - Установите все зависимости:
