@@ -1,11 +1,29 @@
-import SectionTitle from "../SectionTitle/SectionTitle";
+import SectionTitle from '../SectionTitle/SectionTitle';
+function getAgeWord(age) {
+  if (age >= 5 && age <= 20) {
+    return 'лет';
+  } else {
+    switch (age % 10) {
+      case 1:
+        return 'год';
+      case 2:
+      case 3:
+      case 4:
+        return 'года';
+      default:
+        return 'лет';
+    }
+  }
+}
 
 function AboutMe({ aboutMeRef }) {
   const calculateAge = () => {
-    const diffInMilliseconds = new Date() - new Date("2000-08-23");
+    const diffInMilliseconds = new Date() - new Date('2000-08-23');
     const ageDate = new Date(diffInMilliseconds);
     return Math.abs(ageDate.getUTCFullYear() - 1970);
   };
+
+  const age = calculateAge();
 
   return (
     <section ref={aboutMeRef} className="about-me">
@@ -14,7 +32,7 @@ function AboutMe({ aboutMeRef }) {
         <div className="about-me__text">
           <h3 className="about-me__name">Алексей</h3>
           <p className="about-me__profession">
-            Фронтенд-разработчик, {calculateAge()} лет
+            Фронтенд-разработчик, {age} {getAgeWord(age)}
           </p>
           <p className="about-me__description">
             Я живу в Казани. Люблю музыку, компьютерные игры, фильмы,
