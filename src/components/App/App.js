@@ -51,7 +51,7 @@ function App() {
           })
           .catch((err) => {
             console.log(`Ошибка: ${err}`);
-            // localStorage.removeItem("userId");
+            localStorage.removeItem('userId');
             setIsLoading(false);
           });
       }
