@@ -1,5 +1,4 @@
-export const BASE_URL = "https://endjoys.diploma.nomoreparties.sbs/";
-// export const BASE_URL = "http://localhost:3000/";
+export const BASE_URL = process.env.REACT_APP_API_MAIN_URL;
 
 function requestResult(res) {
   if (res.ok) {
@@ -12,9 +11,9 @@ function requestResult(res) {
 export const getSaveMovies = async () => {
   const res = await fetch(`${BASE_URL}movies`, {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-    credentials: "include",
+    credentials: 'include',
   });
   return requestResult(res);
 };
@@ -22,20 +21,20 @@ export const getSaveMovies = async () => {
 export const getInitialUser = async () => {
   const res = await fetch(`${BASE_URL}users/me`, {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-    credentials: "include",
+    credentials: 'include',
   });
   return requestResult(res);
 };
 
 export const editUserInfo = async (name, email) => {
   const res = await fetch(`${BASE_URL}users/me`, {
-    method: "PATCH",
+    method: 'PATCH',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-    credentials: "include",
+    credentials: 'include',
     body: JSON.stringify({
       name,
       email,
@@ -46,11 +45,11 @@ export const editUserInfo = async (name, email) => {
 
 export const saveMovies = async (data) => {
   const res = await fetch(`${BASE_URL}movies`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-    credentials: "include",
+    credentials: 'include',
     body: JSON.stringify({
       country: data.country,
       director: data.director,
@@ -70,22 +69,22 @@ export const saveMovies = async (data) => {
 
 export const deleteSaveMovies = async (movieId) => {
   const res = await fetch(`${BASE_URL}movies/${movieId}`, {
-    method: "DELETE",
+    method: 'DELETE',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-    credentials: "include",
+    credentials: 'include',
   });
   return requestResult(res);
 };
 
 export const registration = async (name, email, password) => {
   const res = await fetch(`${BASE_URL}signup`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-    credentials: "include",
+    credentials: 'include',
     body: JSON.stringify({ name, email, password }),
   });
   return requestResult(res);
@@ -93,17 +92,17 @@ export const registration = async (name, email, password) => {
 
 export const authorize = async (password, email) => {
   const res = await fetch(`${BASE_URL}signin`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-    credentials: "include",
+    credentials: 'include',
     body: JSON.stringify({ password, email }),
   });
 
   return requestResult(res).then((data) => {
     if (data) {
-      localStorage.setItem("userId", data._id);
+      localStorage.setItem('userId', data._id);
       return data;
     }
   });
@@ -111,20 +110,20 @@ export const authorize = async (password, email) => {
 
 export const checkToken = async () => {
   const res = await fetch(`${BASE_URL}users/me`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
-    credentials: "include",
+    credentials: 'include',
   });
   return requestResult(res);
 };
 
 export const getLogoutUser = async () => {
   const res = await fetch(`${BASE_URL}signout`, {
-    method: "GET",
-    credentials: "include",
+    method: 'GET',
+    credentials: 'include',
   });
   return requestResult(res);
 };
