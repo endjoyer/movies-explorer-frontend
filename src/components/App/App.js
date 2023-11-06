@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import ProtectedRouteElement from "../ProtectedRoute/ProtectedRoute";
-import Main from "../Main/Main.js";
-import Movies from "../Movies/Movies.js";
-import SavedMovies from "../SavedMovies/SavedMovies";
-import Profile from "../Profile/Profile.js";
-import Login from "../Login/Login.js";
-import Register from "../Register/Register.js";
-import NotFound from "../NotFound/NotFound";
-import { checkToken, getLogoutUser } from "../../utils/MainApi";
-import Preloader from "../Preloader/Preloader";
+import { useEffect, useState } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import ProtectedRouteElement from '../ProtectedRoute/ProtectedRoute';
+import Main from '../Main/Main.js';
+import Movies from '../Movies/Movies.js';
+import SavedMovies from '../SavedMovies/SavedMovies';
+import Profile from '../Profile/Profile.js';
+import Login from '../Login/Login.js';
+import Register from '../Register/Register.js';
+import NotFound from '../NotFound/NotFound';
+import { checkToken, getLogoutUser } from '../../utils/MainApi';
+import Preloader from '../Preloader/Preloader';
 
 function App() {
-  const userId = localStorage.getItem("userId");
+  const userId = localStorage.getItem('userId');
   const [currentUser, setCurrentUser] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -22,7 +22,7 @@ function App() {
   useEffect(() => {
     if (userId) {
       setIsLoading(true);
-      const localCurrentUser = localStorage.getItem("currentUser");
+      const localCurrentUser = localStorage.getItem('currentUser');
       const parseCurrentUser = localCurrentUser
         ? JSON.parse(localCurrentUser)
         : null;
@@ -35,23 +35,23 @@ function App() {
             if (apiCurrentUser) {
               setCurrentUser(apiCurrentUser);
               localStorage.setItem(
-                "currentUser",
+                'currentUser',
                 JSON.stringify(apiCurrentUser)
               );
             }
           })
           .then(() => {
             if (
-              window.location.pathname === "/signin" ||
-              window.location.pathname === "/signup"
+              window.location.pathname === '/signin' ||
+              window.location.pathname === '/signup'
             ) {
-              navigate("/", { replace: true });
+              navigate('/', { replace: true });
             }
             setIsLoading(false);
           })
           .catch((err) => {
             console.log(`Ошибка: ${err}`);
-            localStorage.removeItem("userId");
+            // localStorage.removeItem("userId");
             setIsLoading(false);
           });
       }
@@ -63,7 +63,7 @@ function App() {
     getLogoutUser();
     setCurrentUser({});
 
-    navigate("/", { replace: true });
+    navigate('/', { replace: true });
   }
 
   return (
